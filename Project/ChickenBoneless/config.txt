@@ -1,0 +1,67 @@
+# GameEngine Config
+
+Window  1250 850
+
+Font    Arial           ../assets/fonts/arial.ttf
+Font    main            ../assets/fonts/Sansation.ttf
+Font    Arcade          ../assets/fonts/arcadeclassic.regular.ttf
+
+Music gameTheme         ../assets/Music/frogger.ogg
+Music missionTheme      ../assets/Music/tweener.ogg
+
+# Textures
+Texture Background      ../assets/Textures/background.jpg
+Texture Title           ../assets/Textures/FroggerTitle.png
+Texture Entities        ../assets/Textures/FroggerAtlas.png
+
+Texture Chicken      	../assets/Textures/Chicken.png
+Texture Human      	../assets/Textures/human.png
+Texture Dog      	../assets/Textures/dog.png
+Texture Cat      	../assets/Textures/Cat.png
+Texture Bullet      	../assets/Textures/bone.png
+Texture ChickenBoneless      	../assets/Textures/ChickenBoneless.png
+
+# Sprites
+Sprite Background       Background   0 0  480 600
+Sprite Title            Title 0 0 480 600
+
+Sprite chicken         	Chicken	0 0 80 80 
+Sprite human        	Human 0 0 99 148
+Sprite dog        	Dog 0 0 80 80
+Sprite cat        	Cat 0 0 80 80
+Sprite bullet        	Bullet 0 0 40 40
+Sprite chickenBoneless        	ChickenBoneless 0 0 600 600
+
+#
+# SOUNDS
+Sound death             ../assets/Sound/froggerDie.wav
+Sound hop               ../assets/Sound/froggerMove.wav
+
+JSON                    ../assets/Textures/FroggerAtlas.json
+
+
+#
+#  Animation    Name            Texture     Speed   Repeats
+Animation       up              Entities    8        no
+Animation       down            Entities    8        no
+Animation       left            Entities    8        no
+Animation       right           Entities    8        no
+Animation       die             Entities    8        no
+
+Animation       2turtles        Entities    1        yes
+Animation       3turtles        Entities    1        yes
+Animation       tree1           Entities    1        no
+Animation       tree2           Entities    1        no
+
+Animation       car             Entities    1        no
+Animation       raceCarL        Entities    1        no
+Animation       raceCarR        Entities    1        no
+Animation       truck           Entities    1        no
+Animation       tractor         Entities    1        no
+
+Animation       bugIcon         Entities    1        no
+Animation       croc            Entities    1        yes
+Animation       crocIcon        Entities    1        no
+Animation       frogIcon        Entities    1        no
+Animation       lillyPad        Entities    1        no
+Animation       lives           Entities    1        no
