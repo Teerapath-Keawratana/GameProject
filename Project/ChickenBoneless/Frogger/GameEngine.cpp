@@ -50,6 +50,7 @@ void GameEngine::loadConfigFromFile(const std::string &path, unsigned int &width
             std::cout << tmp << "\n";
         }
 
+
         if (config.fail()) {
             config.clear(); // clear error on stream
             std::cout << "*** Error reading config file\n";
@@ -74,6 +75,16 @@ void GameEngine::sUserInput()
 			{
 				const std::string actionType = (event.type == sf::Event::KeyPressed) ? "START" : "END";
 				currentScene()->doAction( Command(currentScene()->getActionMap().at(event.key.code), actionType) );
+			}
+		}
+
+		else if (event.type == sf::Event::MouseButtonPressed) {
+			if (currentScene()->getActionMap().contains(event.mouseButton.button))
+			{
+				const std::string actionType = "CLICK";
+				currentScene()->doAction(Command(currentScene()->getActionMap().at(event.mouseButton.button + 1000), actionType, event.mouseButton.x, event.mouseButton.y));
+				// see sf::event::MouseButtonEvent for details
+				//spawnBullet(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
 			}
 		}
 	}

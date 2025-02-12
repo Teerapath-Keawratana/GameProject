@@ -11,9 +11,7 @@
 #include "Scene.h"
 #include "GameEngine.h"
 
-struct PlayerConfig { int  FR, FG, FB, OR, OG, OB, V; float  SR, CR, OT, S, AS; };
-struct EnemyConfig { int  OR, OG, OB, VMIN, VMAX, L, SI; float  SR, CR, OT, SMIN, SMAX; };
-struct BulletConfig { float SR, CR, S; };
+
 
 class Scene_Frogger : public Scene {
 
@@ -23,7 +21,7 @@ class Scene_Frogger : public Scene {
 	sPtrEntt				_dog{ nullptr };
 	sPtrEntt				_bullet{ nullptr };
 
-	BulletConfig			_bulletConfig;
+	
 
 	sf::FloatRect           _worldBounds;
 

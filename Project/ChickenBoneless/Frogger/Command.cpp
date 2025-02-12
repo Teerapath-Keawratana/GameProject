@@ -4,9 +4,10 @@ Command::Command()
 {
 }
 
-Command::Command(const std::string& name, const std::string& type)
+Command::Command(const std::string& name, const std::string& type, int x, int y)
 	: _name(name)
-	, _type(type)
+	, _type(type),
+	_mPos(x, y)
 {
 }
 

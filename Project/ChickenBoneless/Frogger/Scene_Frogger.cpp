@@ -32,7 +32,7 @@ void Scene_Frogger::init(const std::string& levelPath) {
 	sf::Vector2f spawnPos{ _game->windowSize().x / 2.f, _game->windowSize().y - 20.f };
 
 	spawnPlayer(spawnPos);
-	sSpawnMovingEntities();
+	//sSpawnMovingEntities();
 	spawnLife();
 
 	MusicPlayer::getInstance().play("gameTheme");
@@ -166,16 +166,16 @@ void Scene_Frogger::sDoAction(const Command& command)
 		_player->getComponent<CInput>().dir = 0;
 	}
 
-	//if (event.type == sf::Event::MouseButtonPressed) {
-	//	if (event.mouseButton.button == sf::Mouse::Left) {
-	//		// TODO spawnBullet with velocity in direction of mouse
-	//		// see sf::event::MouseButtonEvent for details
-	//		spawnBullet(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
-	//	}
-	//}
+	
 
-	else if (command.name() == "SHOOT")
+	else if (command.type() == "CLICK")
 	{
+		if (command.name() == "SHOOT") {
+			std::cout << "Left " << command._mPos.x << " Y " << command._mPos.y << "\n";
+			sf::Vector2f pointVector(static_cast<float>(command._mPos.x), static_cast<float>(command._mPos.y));
+			spawnBullet(pointVector);
+			
+		}
 		//spawnBullet(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
 	}
 }
@@ -203,15 +203,29 @@ void Scene_Frogger::registerActions()
 	registerAction(sf::Keyboard::S, "DOWN");
 	registerAction(sf::Keyboard::Down, "DOWN");
 
-	registerAction(sf::Mouse::Left, "SHOOT");
+	registerAction(sf::Mouse::Left + 1000, "SHOOT");
 
 }
 
 void Scene_Frogger::spawnBullet(sf::Vector2f mPos)
 {
-	auto& bcf = _bullet;
-	auto pPos = _player->getComponent<CTransform>().pos;
-	//auto bvel = bcf.S * uVecBearing(bearing(mPos - pPos));
+
+
+	auto Pos = _player->getComponent<CTransform>().pos;
+	auto vel = 900.f * uVecBearing(bearing(mPos - Pos));
+	auto b = _entityManager.addEntity("bullet");
+	b->addComponent<CTransform>(Pos, vel);
+
+	auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("up")).animation.getBB();
+	b->addComponent<CBoundingBox>(bb);
+	auto& sprite = b->getComponent<CAnimation>().animation.getSprite();
+
+	centerOrigin(sprite);
+
+
+
+
+
 
 }
 
@@ -219,9 +233,13 @@ void Scene_Frogger::spawnPlayer(sf::Vector2f pos)
 {
 	_player = _entityManager.addEntity("player");
 	_player->addComponent<CTransform>(pos);
+
+
+
 	auto bb = _player->addComponent<CAnimation>(Assets::getInstance().getAnimation("up")).animation.getBB();
 	_player->addComponent<CBoundingBox>(bb);
 	auto& sprite = _player->getComponent<CAnimation>().animation.getSprite();
+
 	centerOrigin(sprite);
 	_player->addComponent<CState>().state = "Alive";
 
@@ -325,6 +343,8 @@ void Scene_Frogger::spawnEnemyVehicle()
 			vehicle->addComponent<CBoundingBox>(bb);
 		}
 	}*/
+
+
 }
 
 

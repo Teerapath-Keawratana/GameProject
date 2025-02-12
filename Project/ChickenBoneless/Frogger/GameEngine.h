@@ -3,12 +3,16 @@
 
 #include "Assets.h"
 
+
 #include <memory>
 #include <map>
+
+
 
 class Scene;
 
 using SceneMap = std::map<std::string, std::shared_ptr<Scene>>;
+
 
 class GameEngine
 {
@@ -19,6 +23,7 @@ public:
 	SceneMap			        _sceneMap;
 	size_t				        _simulationSpeed{ 1 };
 	bool				        _running{ true };
+
 
 	void						loadConfigFromFile(const std::string &path, unsigned int &width, unsigned int &height) const;
 	void						init(const std::string& path);
