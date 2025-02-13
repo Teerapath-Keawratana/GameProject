@@ -233,17 +233,33 @@ void Scene_Frogger::spawnEnemy()
 	std::uniform_real_distribution<float>   d_height(80.f, 770.f);
 	std::uniform_real_distribution<float>   d_speed(200.f, 300.f);
 	std::uniform_real_distribution<float>   d_dir(-1, 1);
+	std::uniform_int_distribution<>         d_type(1, 2);
 
 	sf::Vector2f  pos(d_width(rng), d_height(rng));
 	sf::Vector2f  vel = sf::Vector2f(d_dir(rng), d_dir(rng));
 	vel = normalize(vel);
 	vel = d_speed(rng) * vel;
 
+	std::string type = "";
+
 	
 	auto enemy = _entityManager.addEntity("Enemy");
 	enemy->addComponent<CTransform>(pos, vel);
 
-	auto bb = enemy->addComponent<CAnimation>(Assets::getInstance().getAnimation("croc")).animation.getBB();
+	switch (d_type(rng))
+	{
+	case 1:
+		type = "croc";
+		break;
+
+	case 2:
+		type = "car";
+		break;
+	default:
+		break;
+	}
+
+	auto bb = enemy->addComponent<CAnimation>(Assets::getInstance().getAnimation(type)).animation.getBB();
 	enemy->addComponent<CBoundingBox>(bb);
 	auto& sprite = enemy->getComponent<CAnimation>().animation.getSprite();
 
