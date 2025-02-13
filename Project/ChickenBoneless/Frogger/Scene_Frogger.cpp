@@ -653,6 +653,7 @@ void Scene_Frogger::sCollisions()
 {
 	checkVehicleCollision();
 	checkRiverCollision();
+	
 }
 
 void Scene_Frogger::checkVehicleCollision()
