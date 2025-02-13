@@ -21,6 +21,8 @@ class Scene_Frogger : public Scene {
 	sPtrEntt				_dog{ nullptr };
 	sPtrEntt				_bullet{ nullptr };
 
+	sf::RenderWindow            _window;
+
 	
 
 	sf::FloatRect           _worldBounds;
@@ -72,6 +74,11 @@ class Scene_Frogger : public Scene {
 	void	                registerActions();
 	void                    checkIfDead(sPtrEntt e);
 	void					spawnBullet(sf::Vector2f mPos);
+	void					spawnEnemy();
+	void                    keepObjecsInBounds();
+
+	sf::FloatRect               getViewBounds();
+	void                        sEnemySpawner(sf::Time dt);
 
 public:
 	Scene_Frogger(GameEngine* gameEngine, const std::string& levelPath);

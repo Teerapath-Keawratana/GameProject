@@ -37,6 +37,8 @@ void Scene_Frogger::init(const std::string& levelPath) {
 
 	MusicPlayer::getInstance().play("gameTheme");
 	MusicPlayer::getInstance().setVolume(100);
+	spawnEnemy();
+	std::cout << "World bound" << _worldBounds << " Left " << _worldBounds.left << "\n";
 }
 
 
@@ -216,17 +218,96 @@ void Scene_Frogger::spawnBullet(sf::Vector2f mPos)
 	auto b = _entityManager.addEntity("bullet");
 	b->addComponent<CTransform>(Pos, vel);
 
-	auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("up")).animation.getBB();
+	auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("tree1")).animation.getBB();
 	b->addComponent<CBoundingBox>(bb);
 	auto& sprite = b->getComponent<CAnimation>().animation.getSprite();
 
 	centerOrigin(sprite);
 
 
+}
 
+void Scene_Frogger::spawnEnemy()
+{
+	std::uniform_real_distribution<float>   d_width(40.f, 1210.f);
+	std::uniform_real_distribution<float>   d_height(80.f, 770.f);
+	std::uniform_real_distribution<float>   d_speed(200.f, 300.f);
+	std::uniform_real_distribution<float>   d_dir(-1, 1);
 
+	sf::Vector2f  pos(d_width(rng), d_height(rng));
+	sf::Vector2f  vel = sf::Vector2f(d_dir(rng), d_dir(rng));
+	vel = normalize(vel);
+	vel = d_speed(rng) * vel;
 
+	
+	auto enemy = _entityManager.addEntity("Enemy");
+	enemy->addComponent<CTransform>(pos, vel);
 
+	auto bb = enemy->addComponent<CAnimation>(Assets::getInstance().getAnimation("croc")).animation.getBB();
+	enemy->addComponent<CBoundingBox>(bb);
+	auto& sprite = enemy->getComponent<CAnimation>().animation.getSprite();
+
+	centerOrigin(sprite);
+
+}
+
+void Scene_Frogger::keepObjecsInBounds()
+{
+
+	auto vb = getViewBounds();
+
+	
+
+	// TODO Keep all enemy objects in bounds
+	// if an object collides with a wall it should bounce off the wall
+	for (auto& e : _entityManager.getEntities()) {
+
+		if (e->hasComponent<CTransform>()) {
+			auto& tfm = e->getComponent<CTransform>();
+			auto& pos = tfm.pos;
+			auto& vel = tfm.vel;
+
+			// Check if the object is outside the left or right bounds
+			if (pos.x - 40.f < vb.left) {
+				pos.x = vb.left + 40.f; // Move object back inside the bounds
+				vel.x = -vel.x; // Reverse x velocity to bounce back
+			}
+			else if (pos.x + 40.f > vb.left + vb.width) {
+				pos.x = vb.left + vb.width - 40.f;
+				vel.x = -vel.x; // Reverse x velocity to bounce back
+			}
+
+			// Check if the object is outside the top or bottom bounds
+			if (pos.y - 40.f < vb.top) {
+				pos.y = vb.top + 40.f; // Move object back inside the bounds
+				vel.y = -vel.y; // Reverse y velocity to bounce back
+			}
+			else if (pos.y + 40.f > vb.top + vb.height) {
+				pos.y = vb.top + vb.height - 40.f;
+				vel.y = -vel.y; // Reverse y velocity to bounce back
+			}
+		}
+	}
+}
+
+sf::FloatRect Scene_Frogger::getViewBounds()
+{
+	auto view = _window.getView();
+	return sf::FloatRect(
+		(view.getCenter().x - view.getSize().x / 2.f), (view.getCenter().y - view.getSize().y / 2.f),
+		view.getSize().x, view.getSize().y);
+}
+
+void Scene_Frogger::sEnemySpawner(sf::Time dt)
+{
+	std::exponential_distribution<float> exp(1.f / 3);
+
+	static sf::Time countDownTimer{ sf::Time::Zero };
+	countDownTimer -= dt;
+	if (countDownTimer < sf::Time::Zero) {
+		countDownTimer = sf::seconds(exp(rng));
+		spawnEnemy();
+	}
 }
 
 void Scene_Frogger::spawnPlayer(sf::Vector2f pos)
@@ -622,6 +703,7 @@ void Scene_Frogger::sUpdate(sf::Time dt)
 	sMovement(dt);
 	sCollisions();
 	adjustPlayerPosition();
+	sEnemySpawner(dt);
 
 }
 
@@ -802,4 +884,8 @@ void Scene_Frogger::spawnLife() {
 		.getAnimation("lives")).animation.getSprite();*/
 
 }
+
+
+
+
 
