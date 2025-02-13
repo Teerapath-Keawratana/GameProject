@@ -651,9 +651,28 @@ void Scene_Frogger::sMovement(sf::Time dt)
 
 void Scene_Frogger::sCollisions()
 {
-	checkVehicleCollision();
-	checkRiverCollision();
-	
+	/*checkVehicleCollision();
+	checkRiverCollision();*/
+	//// Bullet collisions with enemies
+	for (auto& bullet : _entityManager.getEntities("bullet")) {
+		auto& bulletTransform = bullet->getComponent<CTransform>();
+
+		for (auto& enemy : _entityManager.getEntities("Enemy")) {
+			auto& enemyTransform = enemy->getComponent<CTransform>();
+			//auto& enemyCollision = enemy->getComponent<CCollision>();
+
+			// Check for collision between bullet and large enemy
+			float distance = length(bulletTransform.pos - enemyTransform.pos);
+			if (distance < 40.f) {
+				// Collision detected: destroy bullet and enemy
+				bullet->destroy();
+				//_score += enemy->getComponent<CScore>().score;  // Add score
+				
+				enemy->destroy();
+				break;
+			}
+		}
+	}
 }
 
 void Scene_Frogger::checkVehicleCollision()
