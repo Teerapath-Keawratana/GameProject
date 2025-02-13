@@ -110,7 +110,7 @@ void Scene_Frogger::sRender()
 	}*/
 
 	for (auto& e : _entityManager.getEntities()) {
-		if (e->getTag() == "bkg" || e->getTag() == "vehicle" || e->getTag() == "river")
+		if (e->getTag() == "bkg" )
 			continue;
 
 		auto& anim = e->getComponent<CAnimation>().animation;
@@ -233,7 +233,7 @@ void Scene_Frogger::spawnEnemy()
 	std::uniform_real_distribution<float>   d_height(80.f, 770.f);
 	std::uniform_real_distribution<float>   d_speed(200.f, 300.f);
 	std::uniform_real_distribution<float>   d_dir(-1, 1);
-	std::uniform_int_distribution<>         d_type(1, 2);
+	std::uniform_int_distribution<>         d_type(1, 3);
 
 	sf::Vector2f  pos(d_width(rng), d_height(rng));
 	sf::Vector2f  vel = sf::Vector2f(d_dir(rng), d_dir(rng));
@@ -254,6 +254,9 @@ void Scene_Frogger::spawnEnemy()
 
 	case 2:
 		type = "car";
+		break;
+	case 3:
+		type = "2turtles";
 		break;
 	default:
 		break;
@@ -664,8 +667,9 @@ void Scene_Frogger::sCollisions()
 				// Collision detected: destroy both player and enemy
 				enemy->destroy();
 				_player->destroy();
+				drawGameOver();
 				//_player = nullptr;  // Mark player for respawn in update
-				_score -= 500;  // Deduct points for player death
+				//_score -= 500;  // Deduct points for player death
 				break;
 			}
 		}
@@ -689,6 +693,7 @@ void Scene_Frogger::sCollisions()
 				//_score += enemy->getComponent<CScore>().score;  // Add score
 				
 				enemy->destroy();
+				_score += 10;
 				break;
 			}
 		}

@@ -27,7 +27,7 @@ class Scene_Frogger : public Scene {
 
 	sf::FloatRect           _worldBounds;
 
-	int						_lives{ 5 };
+	int						_lives{ 1 };
 	int						_score{ 0 };
 	int						_scoreTotal{ 0 };
 	int						_scoredHeights[11] = {};
