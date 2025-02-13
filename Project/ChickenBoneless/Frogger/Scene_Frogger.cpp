@@ -651,6 +651,26 @@ void Scene_Frogger::sMovement(sf::Time dt)
 
 void Scene_Frogger::sCollisions()
 {
+
+	if (_player) {
+		auto& playerTransform = _player->getComponent<CTransform>();
+		for (auto& enemy : _entityManager.getEntities("Enemy")) {
+			auto& enemyTransform = enemy->getComponent<CTransform>();
+			//auto& enemyCollision = enemy->getComponent<CCollision>();
+
+			// Check for collision between player and enemy
+			float distance = length(playerTransform.pos - enemyTransform.pos);
+			if (distance < 40.f) {
+				// Collision detected: destroy both player and enemy
+				enemy->destroy();
+				_player->destroy();
+				//_player = nullptr;  // Mark player for respawn in update
+				_score -= 500;  // Deduct points for player death
+				break;
+			}
+		}
+	}
+
 	/*checkVehicleCollision();
 	checkRiverCollision();*/
 	//// Bullet collisions with enemies
