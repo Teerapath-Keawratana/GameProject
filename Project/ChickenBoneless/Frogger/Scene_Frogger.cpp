@@ -757,6 +757,7 @@ void Scene_Frogger::sUpdate(sf::Time dt)
 	SoundPlayer::getInstance().removeStoppedSounds();
 	_entityManager.update();
 
+	keepObjecsInBounds();
 
 	sAnimation(dt);
 	adjustVehiclePosition();
