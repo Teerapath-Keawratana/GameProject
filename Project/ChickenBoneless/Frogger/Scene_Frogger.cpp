@@ -667,6 +667,7 @@ void Scene_Frogger::sCollisions()
 				// Collision detected: destroy both player and enemy
 				enemy->destroy();
 				_player->destroy();
+				_lives -= 1;
 				drawGameOver();
 				//_player = nullptr;  // Mark player for respawn in update
 				//_score -= 500;  // Deduct points for player death
@@ -874,13 +875,13 @@ void Scene_Frogger::drawGameOver() {
 	std::string str = "GAME OVER";
 	sf::Text text = sf::Text(str, Assets::getInstance().getFont("Arial"), 60);
 	centerOrigin(text);
-	text.setPosition(240.f, 300.f);
+	text.setPosition(600.f, 400.f);
 	_game->window().draw(text);
 
 	std::string strEsc = "Press ESC";
 	sf::Text textEsc = sf::Text(strEsc, Assets::getInstance().getFont("Arial"), 40);
 	centerOrigin(textEsc);
-	textEsc.setPosition(240.f, 340.f);
+	textEsc.setPosition(600.f, 440.f);
 	_game->window().draw(textEsc);
 
 
