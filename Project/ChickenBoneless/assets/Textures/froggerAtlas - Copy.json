@@ -82,7 +82,7 @@
 },
 {
 	"filename": "croc (1).png",
-	"frame": {"x":1,"y":203,"w":102,"h":40},
+	"frame": {"x":278,"y":8,"w":53,"h":52},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":102,"h":40},
@@ -90,12 +90,13 @@
 },
 {
 	"filename": "croc (2).png",
-	"frame": {"x":130,"y":90,"w":102,"h":31},
+	"frame": {"x":278,"y":62,"w":56,"h":51},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":0,"y":4,"w":102,"h":31},
 	"sourceSize": {"w":102,"h":40}
 },
+
 {
 	"filename": "crocIcon.png",
 	"frame": {"x":105,"y":203,"w":36,"h":40},
@@ -202,7 +203,7 @@
 },
 {
 	"filename": "up (1).png",
-	"frame": {"x":6,"y":1,"w":34,"h":32},
+	"frame": {"x":8,"y":1,"w":34,"h":32},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":4,"w":34,"h":32},
@@ -210,12 +211,21 @@
 },
 {
 	"filename": "up (2).png",
-	"frame": {"x":66,"y":1,"w":33,"h":23},
+	"frame": {"x":93,"y":60,"w":62,"h":77},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":8,"w":33,"h":23},
 	"sourceSize": {"w":40,"h":40}
-},{
+},
+{
+	"filename": "up (3).png",
+	"frame": {"x":93,"y":60,"w":62,"h":77},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":8,"w":33,"h":23},
+	"sourceSize": {"w":40,"h":40}
+},
+{
 	"filename": "right (1).png",
 	"frame": {"x":156,"y":124,"w":32,"h":34},
 	"rotated": false,
@@ -233,7 +243,7 @@
 },
 {
 	"filename": "down (1).png",
-	"frame": {"x":234,"y":90,"w":34,"h":32},
+	"frame": {"x":8,"y":60,"w":67,"h":77},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":3,"y":4,"w":34,"h":32},

@@ -27,19 +27,14 @@ Texture ChickenBoneless      	../assets/Textures/ChickenBoneless.png
 Sprite Background       Background   0 0  480 600
 Sprite Title            Title 0 0 480 600
 
-Sprite chicken         	Chicken	0 0 80 80 
-Sprite human        	Human 0 0 99 148
-Sprite dog        	Dog 0 0 80 80
-Sprite cat        	Cat 0 0 80 80
-Sprite bullet        	Bullet 0 0 40 40
-Sprite chickenBoneless        	ChickenBoneless 0 0 600 600
+
 
 #
 # SOUNDS
 Sound death             ../assets/Sound/froggerDie.wav
 Sound hop               ../assets/Sound/froggerMove.wav
 
-JSON                    ../assets/Textures/FroggerAtlas.json
+JSON                    ../assets/Textures/FroggerAtlas2.json
 
 
 #
@@ -67,3 +62,26 @@ Animation       crocIcon        Entities    1        no
 Animation       frogIcon        Entities    1        no
 Animation       lillyPad        Entities    1        no
 Animation       lives           Entities    1        no
+
+Animation       catleft         Entities    5        yes
+Animation       catright        Entities    5        yes
+
+Animation       chickendown     Entities    5        yes
+Animation       chickenleft     Entities    5        yes
+Animation       chickenright    Entities    5        yes
+Animation       chickenup       Entities    5        yes
+
+Animation       bone     	Entities    5        yes
+Animation       boneless     	Entities    1        yes
+
+Animation       dogdown     	Entities    5        yes
+Animation       dogup     	Entities    5        yes
+Animation       dogleft     	Entities    5        yes
+Animation       dogright     	Entities    5        yes
+
+Animation       humandown     	Entities    5        yes
+Animation       humanleft     	Entities    5        yes
+Animation       humanright     	Entities    5        yes
+Animation       humanup     	Entities    5        yes
+
+

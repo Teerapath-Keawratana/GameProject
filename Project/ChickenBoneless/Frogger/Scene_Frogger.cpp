@@ -218,10 +218,10 @@ void Scene_Frogger::spawnBullet(sf::Vector2f mPos)
 	auto b = _entityManager.addEntity("bullet");
 	b->addComponent<CTransform>(Pos, vel);
 
-	auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("tree1")).animation.getBB();
+	auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("bone")).animation.getBB();
 	b->addComponent<CBoundingBox>(bb);
 	auto& sprite = b->getComponent<CAnimation>().animation.getSprite();
-	b->addComponent<CLifespan>(1);
+	b->addComponent<CLifespan>(0.8);
 
 	centerOrigin(sprite);
 
@@ -232,12 +232,12 @@ void Scene_Frogger::spawnEnemy()
 {
 	std::uniform_real_distribution<float>   d_width(40.f, 1210.f);
 	std::uniform_real_distribution<float>   d_height(80.f, 770.f);
-	std::uniform_real_distribution<float>   d_speed(200.f, 300.f);
+	std::uniform_real_distribution<float>   d_speed(50.f, 100.f);
 	std::uniform_real_distribution<float>   d_dir(-1, 1);
-	std::uniform_int_distribution<>         d_type(1, 3);
+	std::uniform_int_distribution<>         d_type(1, 2);
 
 	sf::Vector2f  pos(d_width(rng), d_height(rng));
-	sf::Vector2f  vel = sf::Vector2f(d_dir(rng), d_dir(rng));
+	sf::Vector2f  vel = sf::Vector2f(-1,0);
 	vel = normalize(vel);
 	vel = d_speed(rng) * vel;
 
@@ -250,11 +250,14 @@ void Scene_Frogger::spawnEnemy()
 	switch (d_type(rng))
 	{
 	case 1:
-		type = "croc";
+		
+			type = "catleft";
+		
+		
 		break;
 
 	case 2:
-		type = "car";
+		type = "dogleft";
 		break;
 	case 3:
 		type = "2turtles";
@@ -353,7 +356,7 @@ void Scene_Frogger::spawnPlayer(sf::Vector2f pos)
 
 
 
-	auto bb = _player->addComponent<CAnimation>(Assets::getInstance().getAnimation("up")).animation.getBB();
+	auto bb = _player->addComponent<CAnimation>(Assets::getInstance().getAnimation("chickendown")).animation.getBB();
 	_player->addComponent<CBoundingBox>(bb);
 	auto& sprite = _player->getComponent<CAnimation>().animation.getSprite();
 
@@ -373,25 +376,25 @@ void Scene_Frogger::playerMovement(sf::Time dt)
 
 	if (_player->getComponent<CInput>().dir == 1) {
 		pv.y -= 40.f;
-		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("up"));
+		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("chickenup"));
 		_player->getComponent<CInput>().dir = 0;
 		SoundPlayer::getInstance().play("hop", pos);
 	}
 	if (_player->getComponent<CInput>().dir == 2) {
 		pv.y += 40.f;
-		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("down"));
+		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("chickendown"));
 		_player->getComponent<CInput>().dir = 0;
 		SoundPlayer::getInstance().play("hop", pos);
 	}
 	if (_player->getComponent<CInput>().dir == 4) {
 		pv.x -= 40.f;
-		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("left"));
+		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("chickenleft"));
 		_player->getComponent<CInput>().dir = 0;
 		SoundPlayer::getInstance().play("hop", pos);
 	}
 	if (_player->getComponent<CInput>().dir == 8) {
 		pv.x += 40.f;
-		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("right"));
+		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("chickenright"));
 		_player->getComponent<CInput>().dir = 0;
 		SoundPlayer::getInstance().play("hop", pos);
 	}
@@ -680,7 +683,7 @@ void Scene_Frogger::sCollisions()
 
 			// Check for collision between player and enemy
 			float distance = length(playerTransform.pos - enemyTransform.pos);
-			if (distance < 40.f) {
+			if (distance < 60.f) {
 				// Collision detected: destroy both player and enemy
 				enemy->destroy();
 				_player->destroy();
@@ -805,7 +808,7 @@ void Scene_Frogger::sAnimation(sf::Time dt) {
 
 			if (_player->getComponent<CAnimation>().animation.getName() == "die" && anim.animation.hasEnded() && e->getTag() == "player") {
 				_player->getComponent<CTransform>().pos = sf::Vector2f{ _game->windowSize().x / 2.f, _game->windowSize().y - 20.f };
-				_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("up"));
+				_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("chickendown"));
 			}
 		}
 	}
@@ -897,13 +900,28 @@ void Scene_Frogger::drawGameOver() {
 	text.setPosition(600.f, 400.f);
 	_game->window().draw(text);
 
+	//sf::Vector2f  pos(600.f, 400.f);
+	
+
+	std::string type = "";
+
+
+
+
 	std::string strEsc = "Press ESC";
 	sf::Text textEsc = sf::Text(strEsc, Assets::getInstance().getFont("Arial"), 40);
 	centerOrigin(textEsc);
 	textEsc.setPosition(600.f, 440.f);
 	_game->window().draw(textEsc);
 
+	//auto enemy = _entityManager.addEntity("Boneless");
+	//enemy->addComponent<CTransform>(pos);
 
+	//auto bb = _player->addComponent<CAnimation>(Assets::getInstance().getAnimation("boneless")).animation.getBB();
+	////_player->addComponent<CBoundingBox>(bb);
+	//auto& sprite = _player->getComponent<CAnimation>().animation.getSprite();
+
+	//centerOrigin(sprite);
 
 }
 
