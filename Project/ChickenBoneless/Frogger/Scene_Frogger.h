@@ -80,6 +80,7 @@ class Scene_Frogger : public Scene {
 	sf::FloatRect               getViewBounds();
 	void                        sEnemySpawner(sf::Time dt);
 	void                        sLifespan(sf::Time dt);
+	void						spawnTarget(sf::Vector2f mPos);
 
 public:
 	Scene_Frogger(GameEngine* gameEngine, const std::string& levelPath);

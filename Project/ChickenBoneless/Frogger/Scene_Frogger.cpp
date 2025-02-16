@@ -176,6 +176,8 @@ void Scene_Frogger::sDoAction(const Command& command)
 			std::cout << "Left " << command._mPos.x << " Y " << command._mPos.y << "\n";
 			sf::Vector2f pointVector(static_cast<float>(command._mPos.x), static_cast<float>(command._mPos.y));
 			spawnBullet(pointVector);
+			spawnTarget(pointVector);
+			
 			
 		}
 		//spawnBullet(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
@@ -234,7 +236,7 @@ void Scene_Frogger::spawnEnemy()
 	std::uniform_real_distribution<float>   d_height(80.f, 770.f);
 	std::uniform_real_distribution<float>   d_speed(50.f, 100.f);
 	std::uniform_real_distribution<float>   d_dir(-1, 1);
-	std::uniform_int_distribution<>         d_type(1, 2);
+	std::uniform_int_distribution<>         d_type(1, 3);
 
 	sf::Vector2f  pos(d_width(rng), d_height(rng));
 	sf::Vector2f  vel = sf::Vector2f(-1,0);
@@ -249,18 +251,16 @@ void Scene_Frogger::spawnEnemy()
 
 	switch (d_type(rng))
 	{
-	case 1:
-		
+	case 1:		
 			type = "catleft";
-		
-		
+
 		break;
 
 	case 2:
 		type = "dogleft";
 		break;
 	case 3:
-		type = "2turtles";
+		type = "humanleft";
 		break;
 	default:
 		break;
@@ -294,6 +294,7 @@ void Scene_Frogger::keepObjecsInBounds()
 			if (pos.x - 40.f < vb.left) {
 				pos.x = vb.left + 40.f; // Move object back inside the bounds
 				vel.x = -vel.x; // Reverse x velocity to bounce back
+				
 			}
 			else if (pos.x + 40.f > vb.left + vb.width + 240.f) { // add 240 to increase right hand frame
 				pos.x = vb.left + vb.width + 200.f;
@@ -347,6 +348,16 @@ void Scene_Frogger::sLifespan(sf::Time dt)
 
 		}
 	}
+}
+
+void Scene_Frogger::spawnTarget(sf::Vector2f mPos)
+{
+	
+	sf::CircleShape shape(20.f);
+	centerOrigin(shape);
+	shape.setPosition(mPos);
+	shape.setFillColor(sf::Color(0, 0, 0, 0));
+	_window.draw(shape);
 }
 
 void Scene_Frogger::spawnPlayer(sf::Vector2f pos)
