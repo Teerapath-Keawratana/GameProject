@@ -221,6 +221,7 @@ void Scene_Frogger::spawnBullet(sf::Vector2f mPos)
 	auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("tree1")).animation.getBB();
 	b->addComponent<CBoundingBox>(bb);
 	auto& sprite = b->getComponent<CAnimation>().animation.getSprite();
+	b->addComponent<CLifespan>(1);
 
 	centerOrigin(sprite);
 
@@ -291,8 +292,8 @@ void Scene_Frogger::keepObjecsInBounds()
 				pos.x = vb.left + 40.f; // Move object back inside the bounds
 				vel.x = -vel.x; // Reverse x velocity to bounce back
 			}
-			else if (pos.x + 40.f > vb.left + vb.width) {
-				pos.x = vb.left + vb.width - 40.f;
+			else if (pos.x + 40.f > vb.left + vb.width + 240.f) { // add 240 to increase right hand frame
+				pos.x = vb.left + vb.width + 200.f;
 				vel.x = -vel.x; // Reverse x velocity to bounce back
 			}
 
@@ -301,8 +302,8 @@ void Scene_Frogger::keepObjecsInBounds()
 				pos.y = vb.top + 40.f; // Move object back inside the bounds
 				vel.y = -vel.y; // Reverse y velocity to bounce back
 			}
-			else if (pos.y + 40.f > vb.top + vb.height) {
-				pos.y = vb.top + vb.height - 40.f;
+			else if (pos.y + 40.f > vb.top + vb.height - 50.f) {
+				pos.y = vb.top + vb.height - 180.f;
 				vel.y = -vel.y; // Reverse y velocity to bounce back
 			}
 		}
@@ -326,6 +327,22 @@ void Scene_Frogger::sEnemySpawner(sf::Time dt)
 	if (countDownTimer < sf::Time::Zero) {
 		countDownTimer = sf::seconds(exp(rng));
 		spawnEnemy();
+	}
+}
+
+void Scene_Frogger::sLifespan(sf::Time dt)
+{
+	for (auto e : _entityManager.getEntities()) {
+		// age enties with a lifespan
+		if (e->hasComponent<CLifespan>()) {
+			auto& life = e->getComponent<CLifespan>();
+			life.remaining -= dt;
+			if (life.remaining < sf::Time::Zero) {
+				e->destroy();
+				life.remaining = sf::Time::Zero;
+			}
+
+		}
 	}
 }
 
@@ -767,6 +784,7 @@ void Scene_Frogger::sUpdate(sf::Time dt)
 	sCollisions();
 	adjustPlayerPosition();
 	sEnemySpawner(dt);
+	sLifespan(dt);
 
 }
 
