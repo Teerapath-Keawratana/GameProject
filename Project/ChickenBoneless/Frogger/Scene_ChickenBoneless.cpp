@@ -19,13 +19,13 @@ namespace {
 	std::mt19937 rng(rd());
 }
 
-Scene_Frogger::Scene_Frogger(GameEngine* gameEngine, const std::string& levelPath)
+Scene_ChickenBoneless::Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath)
 	: Scene(gameEngine)
 {
 	init(levelPath);
 }
 
-void Scene_Frogger::init(const std::string& levelPath) {
+void Scene_ChickenBoneless::init(const std::string& levelPath) {
 	loadLevel(levelPath);
 	registerActions();
 
@@ -42,7 +42,7 @@ void Scene_Frogger::init(const std::string& levelPath) {
 }
 
 
-void Scene_Frogger::update(sf::Time dt)
+void Scene_ChickenBoneless::update(sf::Time dt)
 {
 	if (_lives > 0 && !_isFinish)
 		_timer -= dt.asSeconds();
@@ -60,7 +60,7 @@ void Scene_Frogger::update(sf::Time dt)
 
 
 
-void Scene_Frogger::sRender()
+void Scene_ChickenBoneless::sRender()
 {
 
 	for (auto e : _entityManager.getEntities("bkg")) {
@@ -146,7 +146,7 @@ void Scene_Frogger::sRender()
 
 }
 
-void Scene_Frogger::sDoAction(const Command& command)
+void Scene_ChickenBoneless::sDoAction(const Command& command)
 {
 	// On Key Press
 	if (command.type() == "START") {
@@ -184,7 +184,7 @@ void Scene_Frogger::sDoAction(const Command& command)
 	}
 }
 
-void Scene_Frogger::registerActions()
+void Scene_ChickenBoneless::registerActions()
 {
 	registerAction(sf::Keyboard::Z, "ZOOMOUT");
 	registerAction(sf::Keyboard::X, "ZOOMIN");
@@ -211,7 +211,7 @@ void Scene_Frogger::registerActions()
 
 }
 
-void Scene_Frogger::spawnBullet(sf::Vector2f mPos)
+void Scene_ChickenBoneless::spawnBullet(sf::Vector2f mPos)
 {
 
 
@@ -230,7 +230,7 @@ void Scene_Frogger::spawnBullet(sf::Vector2f mPos)
 
 }
 
-void Scene_Frogger::spawnEnemy()
+void Scene_ChickenBoneless::spawnEnemy()
 {
 	std::uniform_real_distribution<float>   d_width(40.f, 1210.f);
 	std::uniform_real_distribution<float>   d_height(80.f, 770.f);
@@ -274,7 +274,7 @@ void Scene_Frogger::spawnEnemy()
 
 }
 
-void Scene_Frogger::keepObjecsInBounds()
+void Scene_ChickenBoneless::keepObjecsInBounds()
 {
 
 	auto vb = getViewBounds();
@@ -314,7 +314,7 @@ void Scene_Frogger::keepObjecsInBounds()
 	}
 }
 
-sf::FloatRect Scene_Frogger::getViewBounds()
+sf::FloatRect Scene_ChickenBoneless::getViewBounds()
 {
 	auto view = _window.getView();
 	return sf::FloatRect(
@@ -322,7 +322,7 @@ sf::FloatRect Scene_Frogger::getViewBounds()
 		view.getSize().x, view.getSize().y);
 }
 
-void Scene_Frogger::sEnemySpawner(sf::Time dt)
+void Scene_ChickenBoneless::sEnemySpawner(sf::Time dt)
 {
 	std::exponential_distribution<float> exp(1.f / 3);
 
@@ -334,7 +334,7 @@ void Scene_Frogger::sEnemySpawner(sf::Time dt)
 	}
 }
 
-void Scene_Frogger::sLifespan(sf::Time dt)
+void Scene_ChickenBoneless::sLifespan(sf::Time dt)
 {
 	for (auto e : _entityManager.getEntities()) {
 		// age enties with a lifespan
@@ -350,7 +350,7 @@ void Scene_Frogger::sLifespan(sf::Time dt)
 	}
 }
 
-void Scene_Frogger::spawnTarget(sf::Vector2f mPos)
+void Scene_ChickenBoneless::spawnTarget(sf::Vector2f mPos)
 {
 	
 	sf::CircleShape shape(20.f);
@@ -360,7 +360,7 @@ void Scene_Frogger::spawnTarget(sf::Vector2f mPos)
 	_window.draw(shape);
 }
 
-void Scene_Frogger::spawnPlayer(sf::Vector2f pos)
+void Scene_ChickenBoneless::spawnPlayer(sf::Vector2f pos)
 {
 	_player = _entityManager.addEntity("player");
 	_player->addComponent<CTransform>(pos);
@@ -377,7 +377,7 @@ void Scene_Frogger::spawnPlayer(sf::Vector2f pos)
 
 }
 
-void Scene_Frogger::playerMovement(sf::Time dt)
+void Scene_ChickenBoneless::playerMovement(sf::Time dt)
 {
 	if (_player->getComponent<CAnimation>().animation.getName() == "die" || _isFinish || _lives < 1)
 		return;
@@ -418,7 +418,7 @@ void Scene_Frogger::playerMovement(sf::Time dt)
 
 }
 
-void Scene_Frogger::adjustPlayerPosition()
+void Scene_ChickenBoneless::adjustPlayerPosition()
 {
 	auto& player_pos = _player->getComponent<CTransform>().pos;
 	auto& playerSize = _player->getComponent<CBoundingBox>().size;
@@ -441,7 +441,7 @@ void Scene_Frogger::adjustPlayerPosition()
 	}
 }
 
-void Scene_Frogger::spawnEnemyVehicle()
+void Scene_ChickenBoneless::spawnEnemyVehicle()
 {
 	/*auto height = _game->windowSize().y;
 	auto heightLevel = 40.f;
@@ -479,7 +479,7 @@ void Scene_Frogger::spawnEnemyVehicle()
 }
 
 
-void Scene_Frogger::adjustVehiclePosition()
+void Scene_ChickenBoneless::adjustVehiclePosition()
 {
 	/*for (auto e : _entityManager.getEntities("vehicle")) {
 		if (e->hasComponent<CTransform>()) {
@@ -502,7 +502,7 @@ void Scene_Frogger::adjustVehiclePosition()
 	}*/
 }
 
-void Scene_Frogger::spawnRiverEntities()
+void Scene_ChickenBoneless::spawnRiverEntities()
 {
 	//auto height = _game->windowSize().y - 240.f;
 	//auto heightLevel = 40.f;
@@ -602,7 +602,7 @@ void Scene_Frogger::spawnRiverEntities()
 
 }
 
-void Scene_Frogger::adjustRiverEntityPosition()
+void Scene_ChickenBoneless::adjustRiverEntityPosition()
 {
 	/*float distance;
 	for (auto e : _entityManager.getEntities("river")) {
@@ -633,13 +633,13 @@ void Scene_Frogger::adjustRiverEntityPosition()
 	}*/
 }
 
-void Scene_Frogger::sSpawnMovingEntities()
+void Scene_ChickenBoneless::sSpawnMovingEntities()
 {
 	/*spawnEnemyVehicle();
 	spawnRiverEntities();*/
 }
 
-void Scene_Frogger::loadLevel(const std::string& path)
+void Scene_ChickenBoneless::loadLevel(const std::string& path)
 {
 	std::ifstream config(path);
 	if (config.fail()) {
@@ -670,7 +670,7 @@ void Scene_Frogger::loadLevel(const std::string& path)
 	config.close();
 }
 
-void Scene_Frogger::sMovement(sf::Time dt)
+void Scene_ChickenBoneless::sMovement(sf::Time dt)
 {
 	playerMovement(dt);
 
@@ -683,7 +683,7 @@ void Scene_Frogger::sMovement(sf::Time dt)
 
 }
 
-void Scene_Frogger::sCollisions()
+void Scene_ChickenBoneless::sCollisions()
 {
 
 	if (_player) {
@@ -732,7 +732,7 @@ void Scene_Frogger::sCollisions()
 	}
 }
 
-void Scene_Frogger::checkVehicleCollision()
+void Scene_ChickenBoneless::checkVehicleCollision()
 {
 	/*auto& pos = _player->getComponent<CTransform>().pos;
 	for (auto e : _entityManager.getEntities("vehicle")) {
@@ -747,7 +747,7 @@ void Scene_Frogger::checkVehicleCollision()
 	getScore();*/
 }
 
-void Scene_Frogger::checkRiverCollision()
+void Scene_ChickenBoneless::checkRiverCollision()
 {
 	/*auto& vel = _player->getComponent<CTransform>().vel;
 	vel.x = 0;
@@ -781,7 +781,7 @@ void Scene_Frogger::checkRiverCollision()
 
 
 
-void Scene_Frogger::sUpdate(sf::Time dt)
+void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 {
 	if (_isPaused)
 		return;
@@ -803,13 +803,13 @@ void Scene_Frogger::sUpdate(sf::Time dt)
 }
 
 
-void Scene_Frogger::onEnd()
+void Scene_ChickenBoneless::onEnd()
 {
 	_game->changeScene("MENU", nullptr, false);
 }
 
 
-void Scene_Frogger::sAnimation(sf::Time dt) {
+void Scene_ChickenBoneless::sAnimation(sf::Time dt) {
 	for (auto e : _entityManager.getEntities()) {
 
 		if (e->getComponent<CAnimation>().has) {
@@ -826,7 +826,7 @@ void Scene_Frogger::sAnimation(sf::Time dt) {
 }
 
 
-void Scene_Frogger::drawScore() {
+void Scene_ChickenBoneless::drawScore() {
 	int totalScore = 0;
 	for (int i = 0; i < 11; ++i) {
 		totalScore += _scoredHeights[i];
@@ -841,7 +841,7 @@ void Scene_Frogger::drawScore() {
 
 }
 
-void Scene_Frogger::getScore() {
+void Scene_ChickenBoneless::getScore() {
 	/*auto pos = _player->getComponent<CTransform>().pos.y;
 	auto name = _player->getComponent<CAnimation>().animation.getName();
 	int posY = static_cast<int>(pos);
@@ -903,7 +903,7 @@ void Scene_Frogger::getScore() {
 	}*/
 }
 
-void Scene_Frogger::drawGameOver() {
+void Scene_ChickenBoneless::drawGameOver() {
 
 	std::string str = "GAME OVER";
 	sf::Text text = sf::Text(str, Assets::getInstance().getFont("Arial"), 60);
@@ -936,7 +936,7 @@ void Scene_Frogger::drawGameOver() {
 
 }
 
-void Scene_Frogger::drawTimer()
+void Scene_ChickenBoneless::drawTimer()
 {
 	/*std::string str = std::to_string(static_cast<int>(_timer));
 	sf::Text text = sf::Text("COUNTDOWN: " + str, Assets::getInstance().getFont("Arial"), 15);
@@ -945,7 +945,7 @@ void Scene_Frogger::drawTimer()
 	_game->window().draw(text);*/
 }
 
-void Scene_Frogger::drawWin() {
+void Scene_ChickenBoneless::drawWin() {
 
 	std::string str = "YOU WIN";
 	sf::Text text = sf::Text(str, Assets::getInstance().getFont("Arial"), 60);
@@ -961,7 +961,7 @@ void Scene_Frogger::drawWin() {
 }
 
 
-void Scene_Frogger::drawLife() {
+void Scene_ChickenBoneless::drawLife() {
 
 	/*for (auto e : _entityManager.getEntities("life")) {
 		auto& anim = e->getComponent<CAnimation>().animation;
@@ -983,7 +983,7 @@ void Scene_Frogger::drawLife() {
 
 }
 
-void Scene_Frogger::spawnLife() {
+void Scene_ChickenBoneless::spawnLife() {
 
 	/*sf::Vector2f pos{ 20.f, 50.f };
 

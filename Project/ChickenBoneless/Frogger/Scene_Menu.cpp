@@ -102,7 +102,7 @@ void Scene_Menu::sDoAction(const Command& action)
 		}
 		else if (action.name() == "PLAY")
 		{
-			_game->changeScene("PLAY", std::make_shared<Scene_Frogger>(_game, _levelPaths[_menuIndex]));
+			_game->changeScene("PLAY", std::make_shared<Scene_ChickenBoneless>(_game, _levelPaths[_menuIndex]));
 		}
 		else if (action.name() == "QUIT")
 		{

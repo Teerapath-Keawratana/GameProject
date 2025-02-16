@@ -13,7 +13,7 @@
 
 
 
-class Scene_Frogger : public Scene {
+class Scene_ChickenBoneless : public Scene {
 
 	sPtrEntt				_player{ nullptr };
 	sPtrEntt				_cat{ nullptr };
@@ -83,7 +83,7 @@ class Scene_Frogger : public Scene {
 	void						spawnTarget(sf::Vector2f mPos);
 
 public:
-	Scene_Frogger(GameEngine* gameEngine, const std::string& levelPath);
+	Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath);
 
 	void		update(sf::Time dt) override;
 	void		sDoAction(const Command& action) override;
