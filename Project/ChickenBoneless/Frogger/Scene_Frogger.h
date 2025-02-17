@@ -80,7 +80,7 @@ class Scene_ChickenBoneless : public Scene {
 	sf::FloatRect               getViewBounds();
 	void                        sEnemySpawner(sf::Time dt);
 	void                        sLifespan(sf::Time dt);
-	void						spawnTarget(sf::Vector2f mPos);
+	void						spawnTarget();
 
 public:
 	Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath);

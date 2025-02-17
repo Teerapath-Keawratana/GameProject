@@ -148,6 +148,8 @@ void Scene_ChickenBoneless::sRender()
 
 void Scene_ChickenBoneless::sDoAction(const Command& command)
 {
+
+
 	// On Key Press
 	if (command.type() == "START") {
 		if (command.name() == "PAUSE") { setPaused(!_isPaused); }
@@ -176,7 +178,7 @@ void Scene_ChickenBoneless::sDoAction(const Command& command)
 			std::cout << "Left " << command._mPos.x << " Y " << command._mPos.y << "\n";
 			sf::Vector2f pointVector(static_cast<float>(command._mPos.x), static_cast<float>(command._mPos.y));
 			spawnBullet(pointVector);
-			spawnTarget(pointVector);
+			
 			
 			
 		}
@@ -213,19 +215,21 @@ void Scene_ChickenBoneless::registerActions()
 
 void Scene_ChickenBoneless::spawnBullet(sf::Vector2f mPos)
 {
+	if (_player->getComponent<CState>().state != "Dead") {
+		auto Pos = _player->getComponent<CTransform>().pos;
+		auto vel = 900.f * uVecBearing(bearing(mPos - Pos));
+		auto b = _entityManager.addEntity("bullet");
+		b->addComponent<CTransform>(Pos, vel);
+
+		auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("bone")).animation.getBB();
+		b->addComponent<CBoundingBox>(bb);
+		auto& sprite = b->getComponent<CAnimation>().animation.getSprite();
+		b->addComponent<CLifespan>(0.8);
+
+		centerOrigin(sprite);
+	}
 
 
-	auto Pos = _player->getComponent<CTransform>().pos;
-	auto vel = 900.f * uVecBearing(bearing(mPos - Pos));
-	auto b = _entityManager.addEntity("bullet");
-	b->addComponent<CTransform>(Pos, vel);
-
-	auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("bone")).animation.getBB();
-	b->addComponent<CBoundingBox>(bb);
-	auto& sprite = b->getComponent<CAnimation>().animation.getSprite();
-	b->addComponent<CLifespan>(0.8);
-
-	centerOrigin(sprite);
 
 
 }
@@ -350,14 +354,14 @@ void Scene_ChickenBoneless::sLifespan(sf::Time dt)
 	}
 }
 
-void Scene_ChickenBoneless::spawnTarget(sf::Vector2f mPos)
+void Scene_ChickenBoneless::spawnTarget()
 {
 	
-	sf::CircleShape shape(20.f);
-	centerOrigin(shape);
-	shape.setPosition(mPos);
-	shape.setFillColor(sf::Color(0, 0, 0, 0));
-	_window.draw(shape);
+	//sf::CircleShape shape(20.f);
+	//centerOrigin(shape);
+	//shape.setPosition(mPos);
+	//shape.setFillColor(sf::Color(0, 0, 0, 0));
+	//_window.draw(shape);
 }
 
 void Scene_ChickenBoneless::spawnPlayer(sf::Vector2f pos)
@@ -698,6 +702,7 @@ void Scene_ChickenBoneless::sCollisions()
 				// Collision detected: destroy both player and enemy
 				enemy->destroy();
 				_player->destroy();
+				_player->addComponent<CState>().state = "Dead";
 				_lives -= 1;
 				drawGameOver();
 				//_player = nullptr;  // Mark player for respawn in update
@@ -799,6 +804,7 @@ void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 	adjustPlayerPosition();
 	sEnemySpawner(dt);
 	sLifespan(dt);
+	spawnTarget();
 
 }
 
