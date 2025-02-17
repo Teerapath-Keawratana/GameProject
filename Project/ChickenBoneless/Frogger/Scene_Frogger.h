@@ -21,12 +21,14 @@ class Scene_ChickenBoneless : public Scene {
 	sPtrEntt				_dog{ nullptr };
 	sPtrEntt				_bullet{ nullptr };
 
+
 	sf::RenderWindow            _window;
 
 	
 
 	sf::FloatRect           _worldBounds;
 
+	int						totalScore{ 0 };
 	int						_lives{ 1 };
 	int						_score{ 0 };
 	int						_scoreTotal{ 0 };
@@ -49,7 +51,7 @@ class Scene_ChickenBoneless : public Scene {
 	void	                onEnd() override;
 	void                    sSpawnMovingEntities();
 	void					sAnimation(sf::Time dt);
-	void					drawScore();
+	void					drawScore(int totalScore);
 	void					getScore();
 	void					drawLife();
 	void					spawnLife();
@@ -60,14 +62,14 @@ class Scene_ChickenBoneless : public Scene {
 
 
 	// helper functions
-	void                    checkVehicleCollision();
-	void                    checkRiverCollision();
+	//void                    checkVehicleCollision();
+	//void                    checkRiverCollision();
 	void                    init(const std::string& path);
 	void                    loadLevel(const std::string& path);
 	void                    spawnPlayer(sf::Vector2f pos);
 	void                    playerMovement(sf::Time dt);
 	void                    adjustPlayerPosition();
-	void                    spawnEnemyVehicle();
+	//void                    spawnEnemyVehicle();
 	void                    adjustVehiclePosition();
 	void                    spawnRiverEntities();
 	void                    adjustRiverEntityPosition();

@@ -70,44 +70,7 @@ void Scene_ChickenBoneless::sRender()
 		}
 	}
 
-	/*for (auto e : _entityManager.getEntities("vehicle")) {
-		auto& anim = e->getComponent<CAnimation>().animation;
-		auto& tfm = e->getComponent<CTransform>();
-		anim.getSprite().setPosition(tfm.pos);
-		_game->window().draw(anim.getSprite());
-
-		if (_drawAABB && e->hasComponent<CBoundingBox>()) {
-			auto box = e->getComponent<CBoundingBox>();
-			sf::RectangleShape rect;
-			rect.setSize(sf::Vector2f{ box.size.x, box.size.y });
-			centerOrigin(rect);
-			rect.setPosition(e->getComponent<CTransform>().pos);
-			rect.setFillColor(sf::Color(0, 0, 0, 0));
-			rect.setOutlineColor(sf::Color{ 0, 255, 0 });
-			rect.setOutlineThickness(2.f);
-			_game->window().draw(rect);
-		}
-	}*/
-
-
-	/*for (auto e : _entityManager.getEntities("river")) {
-		auto& anim = e->getComponent<CAnimation>().animation;
-		auto& tfm = e->getComponent<CTransform>();
-		anim.getSprite().setPosition(tfm.pos);
-		_game->window().draw(anim.getSprite());
-
-		if (_drawAABB && e->hasComponent<CBoundingBox>()) {
-			auto box = e->getComponent<CBoundingBox>();
-			sf::RectangleShape rect;
-			rect.setSize(sf::Vector2f{ box.size.x, box.size.y });
-			centerOrigin(rect);
-			rect.setPosition(e->getComponent<CTransform>().pos);
-			rect.setFillColor(sf::Color(0, 0, 0, 0));
-			rect.setOutlineColor(sf::Color{ 0, 255, 0 });
-			rect.setOutlineThickness(2.f);
-			_game->window().draw(rect);
-		}
-	}*/
+	
 
 	for (auto& e : _entityManager.getEntities()) {
 		if (e->getTag() == "bkg" )
@@ -130,7 +93,7 @@ void Scene_ChickenBoneless::sRender()
 			_game->window().draw(rect);
 		}
 	}
-	drawScore();
+	drawScore(totalScore);
 	drawLife();
 	drawTimer();
 	if (_scoreTotal == _winningScore && _lives > 0) {
@@ -215,7 +178,7 @@ void Scene_ChickenBoneless::registerActions()
 
 void Scene_ChickenBoneless::spawnBullet(sf::Vector2f mPos)
 {
-	if (_player->getComponent<CState>().state != "Dead") {
+	if (!_isFinish) {
 		auto Pos = _player->getComponent<CTransform>().pos;
 		auto vel = 900.f * uVecBearing(bearing(mPos - Pos));
 		auto b = _entityManager.addEntity("bullet");
@@ -445,42 +408,42 @@ void Scene_ChickenBoneless::adjustPlayerPosition()
 	}
 }
 
-void Scene_ChickenBoneless::spawnEnemyVehicle()
-{
-	/*auto height = _game->windowSize().y;
-	auto heightLevel = 40.f;
-
-	static const std::string vehicles[] =
-	{ "raceCarL", "raceCarR", "car", "tractor", "truck" };
-	float vehicleSpawnPos = 110.f;
-	float spacer = 140.f;
-	float vels[] =
-		{ -60.f,90.f,-120.f,150.f, -80.f };
-	
-
-	for (int r{ 0 }; r < 5; r++) {
-		int vehicle;
-		if (r < 4)
-			vehicle = 3;
-		else {
-			vehicle = 2;
-			spacer = 200.f;
-
-		}
-
-		for (int c{ 0 }; c < vehicle; c++) {
-			sf::Vector2f pos{ vehicleSpawnPos + spacer * c, (height - (heightLevel * (r + 1) + 20.f)) };
-			auto vehicle = _entityManager.addEntity("vehicle");
-			vehicle->addComponent<CTransform>(pos, sf::Vector2f(vels[r], 0.f));
-
-			auto bb = vehicle->addComponent<CAnimation>(Assets::getInstance()
-				.getAnimation(vehicles[r])).animation.getBB();
-			vehicle->addComponent<CBoundingBox>(bb);
-		}
-	}*/
-
-
-}
+//void Scene_ChickenBoneless::spawnEnemyVehicle()
+//{
+//	/*auto height = _game->windowSize().y;
+//	auto heightLevel = 40.f;
+//
+//	static const std::string vehicles[] =
+//	{ "raceCarL", "raceCarR", "car", "tractor", "truck" };
+//	float vehicleSpawnPos = 110.f;
+//	float spacer = 140.f;
+//	float vels[] =
+//		{ -60.f,90.f,-120.f,150.f, -80.f };
+//	
+//
+//	for (int r{ 0 }; r < 5; r++) {
+//		int vehicle;
+//		if (r < 4)
+//			vehicle = 3;
+//		else {
+//			vehicle = 2;
+//			spacer = 200.f;
+//
+//		}
+//
+//		for (int c{ 0 }; c < vehicle; c++) {
+//			sf::Vector2f pos{ vehicleSpawnPos + spacer * c, (height - (heightLevel * (r + 1) + 20.f)) };
+//			auto vehicle = _entityManager.addEntity("vehicle");
+//			vehicle->addComponent<CTransform>(pos, sf::Vector2f(vels[r], 0.f));
+//
+//			auto bb = vehicle->addComponent<CAnimation>(Assets::getInstance()
+//				.getAnimation(vehicles[r])).animation.getBB();
+//			vehicle->addComponent<CBoundingBox>(bb);
+//		}
+//	}*/
+//
+//
+//}
 
 
 void Scene_ChickenBoneless::adjustVehiclePosition()
@@ -702,7 +665,7 @@ void Scene_ChickenBoneless::sCollisions()
 				// Collision detected: destroy both player and enemy
 				enemy->destroy();
 				_player->destroy();
-				_player->addComponent<CState>().state = "Dead";
+				_isFinish = true;
 				_lives -= 1;
 				drawGameOver();
 				//_player = nullptr;  // Mark player for respawn in update
@@ -712,8 +675,7 @@ void Scene_ChickenBoneless::sCollisions()
 		}
 	}
 
-	/*checkVehicleCollision();
-	checkRiverCollision();*/
+	
 	//// Bullet collisions with enemies
 	for (auto& bullet : _entityManager.getEntities("bullet")) {
 		auto& bulletTransform = bullet->getComponent<CTransform>();
@@ -730,59 +692,17 @@ void Scene_ChickenBoneless::sCollisions()
 				//_score += enemy->getComponent<CScore>().score;  // Add score
 				
 				enemy->destroy();
-				_score += 10;
+				totalScore += 10;
+				drawScore(totalScore);
 				break;
 			}
 		}
 	}
 }
 
-void Scene_ChickenBoneless::checkVehicleCollision()
-{
-	/*auto& pos = _player->getComponent<CTransform>().pos;
-	for (auto e : _entityManager.getEntities("vehicle")) {
-		auto eGB = e->getComponent<CAnimation>().animation.getSprite().getGlobalBounds();
 
-		if (eGB.contains(pos) && _player->getComponent<CAnimation>().animation.getName() != "die") {
-			_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("die"));
-			SoundPlayer::getInstance().play("death", pos);
-			_lives--;
-		}
-	}
-	getScore();*/
-}
 
-void Scene_ChickenBoneless::checkRiverCollision()
-{
-	/*auto& vel = _player->getComponent<CTransform>().vel;
-	vel.x = 0;
-	auto& pos = _player->getComponent<CTransform>().pos;
 
-	for (auto e : _entityManager.getEntities("river")) {
-		auto eGB = e->getComponent<CAnimation>().animation.getSprite().getGlobalBounds();
-		if (eGB.contains(pos)) {
-			if (e->getComponent<CAnimation>().animation.getName() == "lillyPad") {
-				e->addComponent<CAnimation>(Assets::getInstance().getAnimation("down"));
-				_isComplete = true;
-				getScore();
-				_player->getComponent<CTransform>().pos = sf::Vector2f{ _game->windowSize().x / 2.f, _game->windowSize().y - 20.f };
-				return;
-			}
-			else
-				vel.x = e->getComponent<CTransform>().vel.x;
-		}
-	}
-
-	if (vel.x == 0 && pos.y < 340 && pos.y >80 && _player->getComponent<CAnimation>().animation.getName() != "die") {
-		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("die"));
-		SoundPlayer::getInstance().play("death", pos);
-		_lives--;
-	}
-	else if (_player->getComponent<CAnimation>().animation.getName() != "die") {
-		getScore();
-	}*/
-
-}
 
 
 
@@ -832,11 +752,11 @@ void Scene_ChickenBoneless::sAnimation(sf::Time dt) {
 }
 
 
-void Scene_ChickenBoneless::drawScore() {
-	int totalScore = 0;
+void Scene_ChickenBoneless::drawScore(int totalScore) {
+	/*int totalScore = 0;
 	for (int i = 0; i < 11; ++i) {
 		totalScore += _scoredHeights[i];
-	}
+	}*/
 	_score = totalScore;
 
 	std::string str = std::to_string(_scoreTotal + _score);
@@ -925,11 +845,11 @@ void Scene_ChickenBoneless::drawGameOver() {
 
 
 
-	std::string strEsc = "Press ESC";
+	/*std::string strEsc = "Press ESC";
 	sf::Text textEsc = sf::Text(strEsc, Assets::getInstance().getFont("Arial"), 40);
 	centerOrigin(textEsc);
 	textEsc.setPosition(600.f, 440.f);
-	_game->window().draw(textEsc);
+	_game->window().draw(textEsc);*/
 
 	//auto enemy = _entityManager.addEntity("Boneless");
 	//enemy->addComponent<CTransform>(pos);

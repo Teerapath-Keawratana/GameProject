@@ -30,8 +30,8 @@ void Scene_Menu::init()
 
 	_title = "Chicken Boneless";
 	_menuStrings.push_back("Level 1");
-	_menuStrings.push_back("Level 2");
-	_menuStrings.push_back("Level 3");
+	_menuStrings.push_back("High Score");
+	//_menuStrings.push_back("Level 3");
 
 	_levelPaths.push_back("../assets/level1.txt");
 	_levelPaths.push_back("../assets/level1.txt");

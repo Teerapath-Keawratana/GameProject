@@ -71,7 +71,7 @@ Animation       chickenleft     Entities    5        yes
 Animation       chickenright    Entities    5        yes
 Animation       chickenup       Entities    5        yes
 
-Animation       bone     	Entities    5        yes
+Animation       bone     	Entities    7        yes
 Animation       boneless     	Entities    1        yes
 
 Animation       dogdown     	Entities    5        yes
