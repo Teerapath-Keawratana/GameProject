@@ -49,10 +49,10 @@ class Scene_ChickenBoneless : public Scene {
 	void                    sCollisions();
 	void                    sUpdate(sf::Time dt);
 	void	                onEnd() override;
-	void                    sSpawnMovingEntities();
+	//void                    sSpawnMovingEntities();
 	void					sAnimation(sf::Time dt);
 	void					drawScore(int totalScore);
-	void					getScore();
+	//void					getScore();
 	void					drawLife();
 	void					spawnLife();
 	void					drawGameOver();
@@ -70,11 +70,11 @@ class Scene_ChickenBoneless : public Scene {
 	void                    playerMovement(sf::Time dt);
 	void                    adjustPlayerPosition();
 	//void                    spawnEnemyVehicle();
-	void                    adjustVehiclePosition();
-	void                    spawnRiverEntities();
-	void                    adjustRiverEntityPosition();
+	//void                    adjustVehiclePosition();
+	//void                    spawnRiverEntities();
+	//void                    adjustRiverEntityPosition();
 	void	                registerActions();
-	void                    checkIfDead(sPtrEntt e);
+	//void                    checkIfDead(sPtrEntt e);
 	void					spawnBullet(sf::Vector2f mPos);
 	void					spawnEnemy();
 	void                    keepObjecsInBounds();
@@ -83,6 +83,9 @@ class Scene_ChickenBoneless : public Scene {
 	void                        sEnemySpawner(sf::Time dt);
 	void                        sLifespan(sf::Time dt);
 	void						spawnTarget();
+	void						spawnCatEnemy(sf::Vector2f pos, sf::Vector2f vel);
+	void						spawnDogEnemy(sf::Vector2f pos, sf::Vector2f vel);
+	void						spawnHumanEnemy(sf::Vector2f pos, sf::Vector2f vel);
 
 public:
 	Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath);
