@@ -250,10 +250,6 @@ void Scene_ChickenBoneless::keepObjecsInBounds()
 
 	auto vb = getViewBounds();
 
-	
-
-	// TODO Keep all enemy objects in bounds
-	// if an object collides with a wall it should bounce off the wall
 	for (auto& e : _entityManager.getEntities()) {
 
 		if (e->hasComponent<CTransform>()) {
@@ -265,11 +261,36 @@ void Scene_ChickenBoneless::keepObjecsInBounds()
 			if (pos.x - 40.f < vb.left) {
 				pos.x = vb.left + 40.f; // Move object back inside the bounds
 				vel.x = -vel.x; // Reverse x velocity to bounce back
-				
+				if (vel.x > 0 && e->getComponent<CAnimation>().animation.getName() == "dogleft") {
+
+					e->addComponent<CAnimation>(Assets::getInstance().getAnimation("dogright")) ;
+				}
+				if (vel.x > 0 && e->getComponent<CAnimation>().animation.getName() == "catleft") {
+
+					e->addComponent<CAnimation>(Assets::getInstance().getAnimation("catright"));
+				}
+				if (vel.x > 0 && e->getComponent<CAnimation>().animation.getName() == "humanleft") {
+									
+					e->addComponent<CAnimation>(Assets::getInstance().getAnimation("humanright"));
+				}	
 			}
 			else if (pos.x + 40.f > vb.left + vb.width + 240.f) { // add 240 to increase right hand frame
 				pos.x = vb.left + vb.width + 200.f;
 				vel.x = -vel.x; // Reverse x velocity to bounce back
+				if (vel.x < 0 && e->getComponent<CAnimation>().animation.getName() == "dogright") {
+
+					e->addComponent<CAnimation>(Assets::getInstance().getAnimation("dogleft"));
+				}
+				if (vel.x  < 0 && e->getComponent<CAnimation>().animation.getName()=="catright") {
+					 
+					 e->addComponent<CAnimation>(Assets::getInstance().getAnimation("catleft"));
+				}
+				if (vel.x < 0 && e->getComponent<CAnimation>().animation.getName() == "humanright") {
+				
+					e->addComponent<CAnimation>(Assets::getInstance().getAnimation("humanleft"));
+				}
+
+				
 			}
 
 			// Check if the object is outside the top or bottom bounds
@@ -347,6 +368,7 @@ void Scene_ChickenBoneless::spawnDogEnemy(sf::Vector2f pos, sf::Vector2f vel)
 {
 	auto enemy = _entityManager.addEntity("DogEnemy");
 	enemy->addComponent<CTransform>(pos, vel);
+	enemy->getTag();
 
 	auto bb = enemy->addComponent<CAnimation>(Assets::getInstance().getAnimation("dogleft")).animation.getBB();
 	enemy->addComponent<CBoundingBox>(bb);

@@ -622,28 +622,28 @@
 	"sourceSize": {"w":40,"h":40}
 },{
 	"filename": "humanright (1).png",
-	"frame": {"x":0,"y":570,"w":98,"h":151},
+	"frame": {"x":0,"y":718,"w":98,"h":151},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":5,"w":35,"h":29},
 	"sourceSize": {"w":40,"h":40}
 },{
 	"filename": "humanright (2).png",
-	"frame": {"x":100,"y":570,"w":98,"h":151},
+	"frame": {"x":104,"y":718,"w":98,"h":151},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":5,"w":35,"h":29},
 	"sourceSize": {"w":40,"h":40}
 },{
 	"filename": "humanright (3).png",
-	"frame": {"x":202,"y":570,"w":98,"h":151},
+	"frame": {"x":206,"y":718,"w":98,"h":151},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":5,"w":35,"h":29},
 	"sourceSize": {"w":40,"h":40}
 },{
 	"filename": "humanright (4).png",
-	"frame": {"x":299,"y":570,"w":98,"h":151},
+	"frame": {"x":311,"y":718,"w":98,"h":151},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":5,"w":35,"h":29},
