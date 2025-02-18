@@ -298,7 +298,7 @@ void Scene_ChickenBoneless::keepObjecsInBounds()
 				pos.y = vb.top + 40.f; // Move object back inside the bounds
 				vel.y = -vel.y; // Reverse y velocity to bounce back
 			}
-			else if (pos.y + 40.f > vb.top + vb.height - 50.f) {
+			else if (pos.y + 40.f > vb.top + vb.height - 140.f) {
 				pos.y = vb.top + vb.height - 180.f;
 				vel.y = -vel.y; // Reverse y velocity to bounce back
 			}
