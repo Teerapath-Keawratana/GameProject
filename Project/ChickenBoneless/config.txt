@@ -85,3 +85,6 @@ Animation       humanright     	Entities    5        yes
 Animation       humanup     	Entities    5        yes
 
 
+Animation       target     	Entities    1        yes
+
+

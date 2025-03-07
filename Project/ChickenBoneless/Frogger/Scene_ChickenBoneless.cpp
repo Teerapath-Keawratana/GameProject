@@ -347,7 +347,7 @@ void Scene_ChickenBoneless::spawnTarget()
 
 	_target->destroy();
 
-	auto bb = _target->addComponent<CAnimation>(Assets::getInstance().getAnimation("chickendown")).animation.getBB();
+	auto bb = _target->addComponent<CAnimation>(Assets::getInstance().getAnimation("target")).animation.getBB();
 	_target->addComponent<CBoundingBox>(bb);
 	auto& sprite = _target->getComponent<CAnimation>().animation.getSprite();
 
