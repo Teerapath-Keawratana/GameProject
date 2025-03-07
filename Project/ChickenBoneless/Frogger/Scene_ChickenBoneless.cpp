@@ -983,18 +983,27 @@ void Scene_ChickenBoneless::drawScore(int totalScore) {
 
 void Scene_ChickenBoneless::drawGameOver() {
 
-	std::string str = "GAME OVER";
+	/*std::string str = "GAME OVER";
 	sf::Text text = sf::Text(str, Assets::getInstance().getFont("Arial"), 60);
 	centerOrigin(text);
 	text.setPosition(600.f, 400.f);
-	_game->window().draw(text);
+	_game->window().draw(text);*/
 
-	//sf::Vector2f  pos(600.f, 400.f);
+	sf::Vector2f  pos(600.f, 400.f);
+	sf::Vector2f  vel(0.f, 0.f);
 	
 
 	std::string type = "";
 
+	auto end = _entityManager.addEntity("End");
+	end->addComponent<CTransform>(pos, vel);
+	
 
+	auto bb = end->addComponent<CAnimation>(Assets::getInstance().getAnimation("boneless")).animation.getBB();
+	end->addComponent<CBoundingBox>(bb);
+	auto& sprite = end->getComponent<CAnimation>().animation.getSprite();
+
+	centerOrigin(sprite);
 
 
 	/*std::string strEsc = "Press ESC";
@@ -1007,7 +1016,7 @@ void Scene_ChickenBoneless::drawGameOver() {
 	//enemy->addComponent<CTransform>(pos);
 
 	//auto bb = _player->addComponent<CAnimation>(Assets::getInstance().getAnimation("boneless")).animation.getBB();
-	////_player->addComponent<CBoundingBox>(bb);
+	//_player->addComponent<CBoundingBox>(bb);
 	//auto& sprite = _player->getComponent<CAnimation>().animation.getSprite();
 
 	//centerOrigin(sprite);
