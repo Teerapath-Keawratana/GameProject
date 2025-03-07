@@ -1,0 +1,6 @@
+# highscore
+
+player1		100
+player2		90
+player3		10
+player4		0

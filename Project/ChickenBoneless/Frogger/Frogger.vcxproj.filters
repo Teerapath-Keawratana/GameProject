@@ -57,6 +57,9 @@
     <ClCompile Include="Utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_HighScore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -92,7 +95,7 @@
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_Frogger.h">
+    <ClInclude Include="Scene_ChickenBoneless.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Menu.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_HighScore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

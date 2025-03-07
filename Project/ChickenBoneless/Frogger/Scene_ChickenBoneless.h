@@ -20,6 +20,7 @@ class Scene_ChickenBoneless : public Scene {
 	sPtrEntt				_human{ nullptr };
 	sPtrEntt				_dog{ nullptr };
 	sPtrEntt				_bullet{ nullptr };
+	sPtrEntt				_target{ nullptr };
 
 
 	sf::RenderWindow            _window;
@@ -58,6 +59,7 @@ class Scene_ChickenBoneless : public Scene {
 	void					drawGameOver();
 	void					drawTimer();
 	void					drawWin();
+	void                    sGuideHumans(sf::Time dt);
 
 
 

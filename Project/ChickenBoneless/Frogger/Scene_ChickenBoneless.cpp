@@ -1,7 +1,7 @@
 // 
 // 
 
-#include "Scene_Frogger.h"
+#include "Scene_ChickenBoneless.h"
 #include "Components.h"
 #include "Physics.h"
 #include "Utilities.h"
@@ -173,6 +173,7 @@ void Scene_ChickenBoneless::registerActions()
 	registerAction(sf::Keyboard::Down, "DOWN");
 
 	registerAction(sf::Mouse::Left + 1000, "SHOOT");
+	
 
 }
 
@@ -187,7 +188,7 @@ void Scene_ChickenBoneless::spawnBullet(sf::Vector2f mPos)
 		auto bb = b->addComponent<CAnimation>(Assets::getInstance().getAnimation("bone")).animation.getBB();
 		b->addComponent<CBoundingBox>(bb);
 		auto& sprite = b->getComponent<CAnimation>().animation.getSprite();
-		b->addComponent<CLifespan>(0.8);
+		b->addComponent<CLifespan>(0.3);// reduce life time of bullet
 
 		centerOrigin(sprite);
 	}
@@ -210,44 +211,27 @@ void Scene_ChickenBoneless::spawnEnemy()
 	vel = normalize(vel);
 	vel = d_speed(rng) * vel;
 
-	std::string type = "";
-
-	
-	/*auto enemy = _entityManager.addEntity("Enemy");
-	enemy->addComponent<CTransform>(pos, vel);*/
-
 	switch (d_type(rng))
 	{
 	case 1:		
-		type = "catleft";
-
 		spawnCatEnemy(pos, vel);
 		std::cout << "Call spawnCat" << "\n";
 		break;
 	case 2:
-		type = "dogleft";
 		spawnDogEnemy(pos, vel*2.f);
 		std::cout << "Call spawnDog" << "\n";
 		break;
 	case 3:
-		type = "humanleft";
 		spawnHumanEnemy(pos, vel * 0.5f);
 		break;
 	default:
 		break;
 	}
 
-	/*auto bb = enemy->addComponent<CAnimation>(Assets::getInstance().getAnimation(type)).animation.getBB();
-	enemy->addComponent<CBoundingBox>(bb);
-	auto& sprite = enemy->getComponent<CAnimation>().animation.getSprite();
-
-	centerOrigin(sprite);*/
-
 }
 
 void Scene_ChickenBoneless::keepObjecsInBounds()
 {
-
 	auto vb = getViewBounds();
 
 	for (auto& e : _entityManager.getEntities()) {
@@ -344,12 +328,30 @@ void Scene_ChickenBoneless::sLifespan(sf::Time dt)
 
 void Scene_ChickenBoneless::spawnTarget()
 {
+	// Get the mouse position relative to the window
+	//sf::Vector2f spawnPos{ _game->windowSize().x, _game->windowSize().y };
+	sf::Vector2i mousePos = sf::Mouse::getPosition();
+
+	sf::Vector2f mPos(mousePos);
 	
-	//sf::CircleShape shape(20.f);
-	//centerOrigin(shape);
-	//shape.setPosition(mPos);
-	//shape.setFillColor(sf::Color(0, 0, 0, 0));
-	//_window.draw(shape);
+	std::cout << "Mouse position: (" << mousePos.x << ", " << mousePos.y << ")\n"; 
+
+	mPos.x = mPos.x - 350;
+	mPos.y = mPos.y - 150;
+	
+
+	
+
+	_target = _entityManager.addEntity("target");
+	_target->addComponent<CTransform>(mPos);
+
+	_target->destroy();
+
+	auto bb = _target->addComponent<CAnimation>(Assets::getInstance().getAnimation("chickendown")).animation.getBB();
+	_target->addComponent<CBoundingBox>(bb);
+	auto& sprite = _target->getComponent<CAnimation>().animation.getSprite();
+
+	centerOrigin(sprite);
 }
 
 void Scene_ChickenBoneless::spawnCatEnemy(sf::Vector2f pos, sf::Vector2f vel)
@@ -725,13 +727,11 @@ void Scene_ChickenBoneless::sCollisions()
 			float distance = length(playerTransform.pos - enemyTransform.pos);
 			if (distance < 60.f) {
 				// Collision detected: destroy both player and enemy
-				enemy->destroy();
+				//enemy->destroy();
 				_player->destroy();
 				_isFinish = true;
 				_lives -= 1;
 				drawGameOver();
-				//_player = nullptr;  // Mark player for respawn in update
-				//_score -= 500;  // Deduct points for player death
 				break;
 			}
 		}
@@ -771,7 +771,7 @@ void Scene_ChickenBoneless::sCollisions()
 			float distance = length(playerTransform.pos - enemyTransform.pos);
 			if (distance < 40.f) {
 				// Collision detected: destroy both player and enemy
-				enemy->destroy();
+				//enemy->destroy();
 				_player->destroy();
 				_isFinish = true;
 				_lives -= 1;
@@ -817,7 +817,7 @@ void Scene_ChickenBoneless::sCollisions()
 			float distance = length(playerTransform.pos - enemyTransform.pos);
 			if (distance < 70.f) {
 				// Collision detected: destroy both player and enemy
-				enemy->destroy();
+				//enemy->destroy();
 				_player->destroy();
 				_isFinish = true;
 				_lives -= 1;
@@ -878,6 +878,8 @@ void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 	sEnemySpawner(dt);
 	sLifespan(dt);
 	spawnTarget();
+	//sGuideHumans(dt);
+	
 
 }
 
@@ -1034,6 +1036,35 @@ void Scene_ChickenBoneless::drawWin() {
 	centerOrigin(textEsc);
 	textEsc.setPosition(240.f, 340.f);
 	_game->window().draw(textEsc);
+}
+
+void Scene_ChickenBoneless::sGuideHumans(sf::Time dt)
+{
+
+	const float approachRate = 500.f;
+	for (auto e : _entityManager.getEntities("HumanEnemy")) // human
+	{
+		if (e->getComponent<CTransform>().has)
+		{
+			auto& tfm = e->getComponent<CTransform>();
+			auto ePos = _player->getComponent<CTransform>().pos;//findClosestEnemy(tfm.pos);        // change this to chicken position  
+			auto Pvel = _player->getComponent<CTransform>().vel;
+
+			auto targetDir = normalize(ePos - tfm.pos);
+			tfm.vel =250.f * normalize(approachRate * dt.asSeconds() * targetDir + tfm.vel);
+			tfm.angle = bearing(tfm.vel) + 90;
+		}
+
+		auto hVel = e->getComponent<CTransform>().vel.x;
+
+		if (hVel > 0 && e->getComponent<CAnimation>().animation.getName() == "humanleft") {
+			e->addComponent<CAnimation>(Assets::getInstance().getAnimation("humanright"));
+		}
+		if(hVel < 0 && e->getComponent<CAnimation>().animation.getName() == "humanright")
+		{
+			e->addComponent<CAnimation>(Assets::getInstance().getAnimation("humanleft"));
+		}
+	}
 }
 
 

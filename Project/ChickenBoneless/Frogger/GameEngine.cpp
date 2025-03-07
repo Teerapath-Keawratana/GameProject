@@ -1,6 +1,6 @@
 #include "GameEngine.h"
 #include "Assets.h"
-#include "Scene_Frogger.h"
+#include "Scene_ChickenBoneless.h"
 #include "Scene_Menu.h"
 #include "Command.h"
 #include <fstream>
@@ -86,6 +86,10 @@ void GameEngine::sUserInput()
 				// see sf::event::MouseButtonEvent for details
 				//spawnBullet(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
 			}
+		}
+
+		else if (event.type == sf::Event::MouseMoved) {
+
 		}
 	}
 }
