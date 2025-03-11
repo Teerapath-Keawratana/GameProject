@@ -7,6 +7,7 @@
 #include <memory>
 #include <cstdlib>
 #include <iostream>
+#include "Scene_HighScore.h"
 
 
 GameEngine::GameEngine(const std::string& path)
@@ -30,6 +31,7 @@ void GameEngine::init(const std::string& path)
     _statisticsText.setCharacterSize(15);
 
 	changeScene("MENU", std::make_shared<Scene_Menu>(this));
+	//changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(this));
 }
 
 void GameEngine::loadConfigFromFile(const std::string &path, unsigned int &width, unsigned int &height) const {

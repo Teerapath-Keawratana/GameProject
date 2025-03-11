@@ -2,6 +2,7 @@
 #include "Scene_ChickenBoneless.h"
 #include "MusicPlayer.h"
 #include <memory>
+#include "Scene_HighScore.h"
 
 void Scene_Menu::onEnd()
 {
@@ -27,6 +28,7 @@ void Scene_Menu::init()
 	registerAction(sf::Keyboard::Down, "DOWN");
 	registerAction(sf::Keyboard::D, "PLAY");
 	registerAction(sf::Keyboard::Escape, "QUIT");
+	registerAction(sf::Keyboard::H, "HIGHSCORE");
 
 	_title = "Chicken Boneless";
 	_menuStrings.push_back("Level 1");
@@ -70,7 +72,7 @@ void Scene_Menu::sRender()
 
 	static const sf::Color backgroundColor(100, 100, 255);
 
-	sf::Text footer("UP: W    DOWN: S   PLAY:D    QUIT: ESC",
+	sf::Text footer("UP: W    DOWN: S   PLAY:D    QUIT: ESC	High Score: H",
 		Assets::getInstance().getFont("main"), 20);
 	footer.setFillColor(normalColor);
 	footer.setPosition(32, 530);
@@ -115,6 +117,10 @@ void Scene_Menu::sDoAction(const Command& action)
 		else if (action.name() == "PLAY")
 		{
 			_game->changeScene("PLAY", std::make_shared<Scene_ChickenBoneless>(_game, _levelPaths[_menuIndex]));
+		}
+		else if (action.name() == "HIGHSCORE")
+		{
+			_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));
 		}
 		else if (action.name() == "QUIT")
 		{
