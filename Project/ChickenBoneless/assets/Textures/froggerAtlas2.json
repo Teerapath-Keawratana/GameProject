@@ -697,6 +697,13 @@
 	"trimmed": true,
 	"spriteSourceSize": {"x":2,"y":5,"w":35,"h":29},
 	"sourceSize": {"w":40,"h":40}
+},{
+	"filename": "target (3).png",
+	"frame": {"x":448,"y":919,"w":91,"h":88},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":5,"w":35,"h":29},
+	"sourceSize": {"w":40,"h":40}
 }
 ],
 "meta": {

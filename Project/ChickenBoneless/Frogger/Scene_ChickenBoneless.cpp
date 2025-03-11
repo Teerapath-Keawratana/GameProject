@@ -330,6 +330,7 @@ void Scene_ChickenBoneless::spawnTarget()
 {
 	// Get the mouse position relative to the window
 	//sf::Vector2f spawnPos{ _game->windowSize().x, _game->windowSize().y };
+
 	sf::Vector2i mousePos = sf::Mouse::getPosition();
 
 	sf::Vector2f mPos(mousePos);

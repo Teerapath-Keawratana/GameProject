@@ -18,14 +18,34 @@ void Scene_HighScore::init()
 	MusicPlayer::getInstance().play("gameTheme");
 	MusicPlayer::getInstance().setVolume(90);
 
+	registerAction(sf::Keyboard::W, "UP");
+	registerAction(sf::Keyboard::Up, "UP");
+	registerAction(sf::Keyboard::S, "DOWN");
+	registerAction(sf::Keyboard::Down, "DOWN");
+	registerAction(sf::Keyboard::D, "PLAY");
 	registerAction(sf::Keyboard::Escape, "QUIT");
 
-	_title = "Chicken Boneless";
+	_title = "High Score";
+	_menuStrings.push_back("Level 1");
+	_menuStrings.push_back("High Score");
+	//_menuStrings.push_back("Level 3");
+
+	_levelPaths.push_back("../assets/level1.txt");
+	_levelPaths.push_back("../assets/level1.txt");
+	_levelPaths.push_back("../assets/level1.txt");
 
 	_menuText.setFont(Assets::getInstance().getFont("main"));
 
 	const size_t CHAR_SIZE{ 64 };
 	_menuText.setCharacterSize(CHAR_SIZE);
+
+
+	// Load background texture
+	if (!_backgroundTexture.loadFromFile("../assets/Textures/backgroundMenu.png"))
+	{
+		//std::cerr << "Error loading background image!" << std::endl;
+	}
+	_backgroundSprite.setTexture(_backgroundTexture);
 
 }
 
@@ -61,6 +81,8 @@ void Scene_HighScore::sRender()
 	_menuText.setString(_title);
 	_menuText.setPosition(10, 10);
 	_game->window().draw(_menuText);
+
+	_game->window().draw(footer);
 }
 
 void Scene_HighScore::sDoAction(const Command& action)

@@ -42,6 +42,14 @@ void Scene_Menu::init()
 	const size_t CHAR_SIZE{ 64 };
 	_menuText.setCharacterSize(CHAR_SIZE);
 
+
+	// Load background texture
+	if (!_backgroundTexture.loadFromFile("../assets/Textures/backgroundMenu.png"))
+	{
+		std::cerr << "Error loading background image!" << std::endl;
+	}
+	_backgroundSprite.setTexture(_backgroundTexture);
+
 }
 
 void Scene_Menu::update(sf::Time dt)
@@ -67,7 +75,11 @@ void Scene_Menu::sRender()
 	footer.setFillColor(normalColor);
 	footer.setPosition(32, 530);
 
-	_game->window().clear(backgroundColor);
+	//_game->window().clear(backgroundColor);
+	_game->window().clear();  // Clear without a solid color
+	// Draw the background first
+	_game->window().draw(_backgroundSprite);
+
 
 	_menuText.setFillColor(normalColor);
 	_menuText.setString(_title);
