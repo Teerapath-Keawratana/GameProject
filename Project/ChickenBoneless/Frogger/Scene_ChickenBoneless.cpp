@@ -211,22 +211,25 @@ void Scene_ChickenBoneless::spawnEnemy()
 	vel = normalize(vel);
 	vel = d_speed(rng) * vel;
 
-	switch (d_type(rng))
-	{
-	case 1:		
-		spawnCatEnemy(pos, vel);
-		std::cout << "Call spawnCat" << "\n";
-		break;
-	case 2:
-		spawnDogEnemy(pos, vel*2.f);
-		std::cout << "Call spawnDog" << "\n";
-		break;
-	case 3:
-		spawnHumanEnemy(pos, vel * 0.5f);
-		break;
-	default:
-		break;
+	if (!_isFinish) {
+		switch (d_type(rng))
+		{
+		case 1:
+			spawnCatEnemy(pos, vel);
+			std::cout << "Call spawnCat" << "\n";
+			break;
+		case 2:
+			spawnDogEnemy(pos, vel * 2.f);
+			std::cout << "Call spawnDog" << "\n";
+			break;
+		case 3:
+			spawnHumanEnemy(pos, vel * 0.5f);
+			break;
+		default:
+			break;
+		}
 	}
+	
 
 }
 
