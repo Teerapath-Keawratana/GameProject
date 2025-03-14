@@ -879,7 +879,7 @@ void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 	sEnemySpawner(dt);
 	sLifespan(dt);
 	spawnTarget();
-	//sGuideHumans(dt);
+	sGuideHumans(dt);
 	
 
 }
