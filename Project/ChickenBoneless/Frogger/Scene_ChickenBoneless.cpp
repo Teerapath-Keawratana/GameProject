@@ -156,7 +156,7 @@ void Scene_ChickenBoneless::registerActions()
 
 
 	registerAction(sf::Keyboard::P, "PAUSE");
-	registerAction(sf::Keyboard::Escape, "BACK");
+	registerAction(sf::Keyboard::Escape, "QUIT");
 	registerAction(sf::Keyboard::Q, "QUIT");
 
 	registerAction(sf::Keyboard::C, "TOGGLE_COLLISION");
