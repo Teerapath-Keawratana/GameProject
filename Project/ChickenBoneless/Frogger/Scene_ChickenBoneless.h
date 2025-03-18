@@ -64,17 +64,12 @@ class Scene_ChickenBoneless : public Scene {
 
 
 	// helper functions
-	//void                    checkVehicleCollision();
-	//void                    checkRiverCollision();
+
 	void                    init(const std::string& path);
 	void                    loadLevel(const std::string& path);
 	void                    spawnPlayer(sf::Vector2f pos);
 	void                    playerMovement(sf::Time dt);
 	void                    adjustPlayerPosition();
-	//void                    spawnEnemyVehicle();
-	//void                    adjustVehiclePosition();
-	//void                    spawnRiverEntities();
-	//void                    adjustRiverEntityPosition();
 	void	                registerActions();
 	//void                    checkIfDead(sPtrEntt e);
 	void					spawnBullet(sf::Vector2f mPos);
