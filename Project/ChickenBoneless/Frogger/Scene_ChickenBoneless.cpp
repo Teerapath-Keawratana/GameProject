@@ -678,8 +678,7 @@ void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 	keepObjecsInBounds();
 
 	sAnimation(dt);
-	//adjustVehiclePosition();
-	//adjustRiverEntityPosition();
+
 
 	sMovement(dt);
 	sCollisions();

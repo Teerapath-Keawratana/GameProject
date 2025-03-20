@@ -29,9 +29,9 @@ void Scene_HighScore::init()
 	registerAction(sf::Keyboard::M, "MENU");
 	registerAction(sf::Keyboard::Escape, "QUIT");
 
-	_title = "High Score";
+	/*_title = "High Score";
 	_menuStrings.push_back("Level 1");
-	_menuStrings.push_back("High Score");
+	_menuStrings.push_back("High Score");*/
 	//_menuStrings.push_back("Level 3");
 
 	_levelPaths.push_back("../assets/level1.txt");
@@ -45,7 +45,7 @@ void Scene_HighScore::init()
 
 
 	// Load background texture
-	if (!_backgroundTexture.loadFromFile("../assets/Textures/backgroundMenu.png"))
+	if (!_backgroundTexture.loadFromFile("../assets/Textures/highscorebg.png"))
 	{
 		//std::cerr << "Error loading background image!" << std::endl;
 	}
