@@ -71,7 +71,7 @@ void Scene_HighScore::sRender()
 
 	static const sf::Color backgroundColor(100, 100, 255);
 
-	sf::Text footer("PLAY:D    QUIT: ESC	menu: M",
+	sf::Text footer("PLAY:D    QUIT: ESC	MENE: M",
 	Assets::getInstance().getFont("main"), 20);
 	footer.setFillColor(normalColor);
 	footer.setPosition(32, 530);
