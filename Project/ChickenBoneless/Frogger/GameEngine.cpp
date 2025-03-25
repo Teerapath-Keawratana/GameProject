@@ -7,7 +7,6 @@
 #include <memory>
 #include <cstdlib>
 #include <iostream>
-#include "Scene_HighScore.h"
 
 
 GameEngine::GameEngine(const std::string& path)
@@ -102,6 +101,9 @@ std::shared_ptr<Scene> GameEngine::currentScene()
 	return _sceneMap.at(_currentScene);
 }
 
+
+
+
 void GameEngine::changeScene(const std::string& sceneName, std::shared_ptr<Scene> scene, bool endCurrentScene)
 {
 
@@ -148,6 +150,7 @@ void GameEngine::run()
 		currentScene()->sRender();					// render world
 
 		// draw stats
+		
 
 		// display
 		window().display();
@@ -178,3 +181,5 @@ bool GameEngine::isRunning()
 {
 	return (_running && _window.isOpen());
 }
+
+

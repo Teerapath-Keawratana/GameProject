@@ -13,6 +13,10 @@ class Scene;
 
 using SceneMap = std::map<std::string, std::shared_ptr<Scene>>;
 
+//struct ScoreEntry {
+//	std::string name;
+//	int score;
+//};
 
 class GameEngine
 {
@@ -25,10 +29,13 @@ public:
 	bool				        _running{ true };
 
 
+
+
 	void						loadConfigFromFile(const std::string &path, unsigned int &width, unsigned int &height) const;
 	void						init(const std::string& path);
 	void						sUserInput();
 	std::shared_ptr<Scene>		currentScene();
+
 
 	// stats
 	sf::Text					_statisticsText;

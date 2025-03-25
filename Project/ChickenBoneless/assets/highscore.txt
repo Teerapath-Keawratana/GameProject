@@ -1,3 +1,3 @@
 AAA		100
 BBB		200
-TTA		300
+TTT		300

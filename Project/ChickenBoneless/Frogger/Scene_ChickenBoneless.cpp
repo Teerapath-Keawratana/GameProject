@@ -9,6 +9,7 @@
 #include "Assets.h"
 #include "SoundPlayer.h"
 #include "GameEngine.h"
+#include "Scene_HighScore.h"
 
 #include <random>
 #include <fstream>
@@ -39,6 +40,8 @@ void Scene_ChickenBoneless::init(const std::string& levelPath) {
 	MusicPlayer::getInstance().setVolume(100);
 	spawnEnemy();
 	std::cout << "World bound" << _worldBounds << " Left " << _worldBounds.left << "\n";
+
+	
 }
 
 
@@ -344,8 +347,6 @@ void Scene_ChickenBoneless::spawnTarget()
 	mPos.y = mPos.y - 150;
 	
 
-	
-
 	_target = _entityManager.addEntity("target");
 	_target->addComponent<CTransform>(mPos);
 
@@ -393,6 +394,12 @@ void Scene_ChickenBoneless::spawnHumanEnemy(sf::Vector2f pos, sf::Vector2f vel)
 	auto& sprite = enemy->getComponent<CAnimation>().animation.getSprite();
 
 	centerOrigin(sprite);
+}
+
+void Scene_ChickenBoneless::checkFinalScore()
+{
+	
+
 }
 
 void Scene_ChickenBoneless::spawnPlayer(sf::Vector2f pos)
@@ -475,8 +482,6 @@ void Scene_ChickenBoneless::adjustPlayerPosition()
 		player_pos.y = _game->windowSize().y - playerHalfSize.y;
 	}
 }
-
-
 
 
 void Scene_ChickenBoneless::loadLevel(const std::string& path)
@@ -661,12 +666,6 @@ void Scene_ChickenBoneless::sCollisions()
 		}
 	}
 }
-
-
-
-
-
-
 
 void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 {

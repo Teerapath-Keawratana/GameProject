@@ -10,6 +10,7 @@
 #include "Entity.h"
 #include "Scene.h"
 #include "GameEngine.h"
+#include "Scene_HighScore.h"
 
 
 
@@ -21,6 +22,7 @@ class Scene_ChickenBoneless : public Scene {
 	sPtrEntt				_dog{ nullptr };
 	sPtrEntt				_bullet{ nullptr };
 	sPtrEntt				_target{ nullptr };
+	
 
 
 	sf::RenderWindow            _window;
@@ -83,6 +85,7 @@ class Scene_ChickenBoneless : public Scene {
 	void						spawnCatEnemy(sf::Vector2f pos, sf::Vector2f vel);
 	void						spawnDogEnemy(sf::Vector2f pos, sf::Vector2f vel);
 	void						spawnHumanEnemy(sf::Vector2f pos, sf::Vector2f vel);
+	void						checkFinalScore();
 
 public:
 	Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath);
