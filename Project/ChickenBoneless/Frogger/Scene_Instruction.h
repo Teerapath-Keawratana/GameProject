@@ -2,14 +2,8 @@
 
 #include "Scene.h"
 
-struct ScoreEntry {
-	std::string name;
-	int score;
-};
-
-class Scene_HighScore : public Scene
+class Scene_Instruction : public Scene
 {
-	
 private:
 	std::vector<std::string>	_menuStrings;
 	sf::Text					_menuText;
@@ -17,25 +11,22 @@ private:
 	int							_menuIndex{ 0 };
 	std::string					_title;
 
-	
-
 	sf::Texture _backgroundTexture;
 	sf::Sprite _backgroundSprite;
 
-	
+
 	void init();
 	void onEnd() override;
-	
 public:
 
-	Scene_HighScore(GameEngine* gameEngine);
+	Scene_Instruction(GameEngine* gameEngine);
 
 	void update(sf::Time dt) override;
 
 	void sRender() override;
 	void sDoAction(const Command& action) override;
 
-	void loadHighScores(const std::string& filename);
-	std::vector<ScoreEntry> scores;
+
 };
+
 

@@ -1,16 +1,15 @@
-#include "Scene_Menu.h"
-#include "Scene_ChickenBoneless.h"
 #include "Scene_Instruction.h"
+#include "Scene_ChickenBoneless.h"
 #include "MusicPlayer.h"
 #include <memory>
 #include "Scene_HighScore.h"
 
-void Scene_Menu::onEnd()
+void Scene_Instruction::onEnd()
 {
 	_game->window().close();
 }
 
-Scene_Menu::Scene_Menu(GameEngine* gameEngine)
+Scene_Instruction::Scene_Instruction(GameEngine* gameEngine)
 	: Scene(gameEngine)
 {
 	init();
@@ -18,7 +17,7 @@ Scene_Menu::Scene_Menu(GameEngine* gameEngine)
 
 
 
-void Scene_Menu::init()
+void Scene_Instruction::init()
 {
 	MusicPlayer::getInstance().play("gameTheme");
 	MusicPlayer::getInstance().setVolume(90);
@@ -32,7 +31,7 @@ void Scene_Menu::init()
 	registerAction(sf::Keyboard::H, "HIGHSCORE");
 	registerAction(sf::Keyboard::I, "INSTRUCTION");
 
-	_title = "Chicken Boneless";
+	_title = "Instruction";
 	_menuStrings.push_back("Level 1");
 	_menuStrings.push_back("High Score");
 	//_menuStrings.push_back("Level 3");
@@ -56,13 +55,13 @@ void Scene_Menu::init()
 
 }
 
-void Scene_Menu::update(sf::Time dt)
+void Scene_Instruction::update(sf::Time dt)
 {
 	_entityManager.update();
 }
 
 
-void Scene_Menu::sRender()
+void Scene_Instruction::sRender()
 {
 
 	sf::View view = _game->window().getView();
@@ -104,7 +103,7 @@ void Scene_Menu::sRender()
 }
 
 
-void Scene_Menu::sDoAction(const Command& action)
+void Scene_Instruction::sDoAction(const Command& action)
 {
 	if (action.type() == "START")
 	{
@@ -123,10 +122,6 @@ void Scene_Menu::sDoAction(const Command& action)
 		else if (action.name() == "HIGHSCORE")
 		{
 			_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));
-		}
-		else if (action.name() == "INSTRUCTION")
-		{
-			_game->changeScene("INSTRUCTION", std::make_shared<Scene_Instruction>(_game));
 		}
 		else if (action.name() == "QUIT")
 		{

@@ -1,5 +1,6 @@
 #include "Scene_HighScore.h"
 #include "Scene_ChickenBoneless.h"
+#include "Scene_Instruction.h"
 #include "MusicPlayer.h"
 #include "Scene_Menu.h"
 #include <memory>
@@ -68,6 +69,7 @@ void Scene_HighScore::init()
     registerAction(sf::Keyboard::D, "PLAY");
     registerAction(sf::Keyboard::M, "MENU");
     registerAction(sf::Keyboard::Escape, "QUIT");
+    registerAction(sf::Keyboard::I, "INSTRUCTION");
 
     _levelPaths.push_back("../assets/level1.txt");
     _levelPaths.push_back("../assets/level1.txt");
@@ -85,6 +87,13 @@ void Scene_HighScore::init()
     _backgroundSprite.setTexture(_backgroundTexture);
 
     loadHighScores(filename);
+
+    //std::cout << "last score name:" << scores[scores.size() - 1].name << "\n";
+    //std::cout << "last score score:" << scores[scores.size() - 1].score << "\n";
+    //scores[scores.size() - 1].name = "Tee";
+    //scores[scores.size() - 1].score = 500;
+    //std::cout << "After last score name:" << scores[scores.size() - 1].name << "\n";
+    //std::cout << "Afterlast score score:" << scores[scores.size() - 1].score << "\n";
 }
 
 void Scene_HighScore::update(sf::Time dt)
@@ -123,7 +132,9 @@ void Scene_HighScore::sRender()
     }
 
     
-    
+   
+
+
 
     // Render high scores
     sf::Text scoreText ;
@@ -167,6 +178,10 @@ void Scene_HighScore::sDoAction(const Command& action)
         else if (action.name() == "MENU")
         {
             _game->changeScene("MENU", std::make_shared<Scene_Menu>(_game));
+        }
+        else if (action.name() == "INSTRUCTION")
+        {
+            _game->changeScene("INSTRUCTION", std::make_shared<Scene_Instruction>(_game));
         }
         else if (action.name() == "QUIT")
         {
