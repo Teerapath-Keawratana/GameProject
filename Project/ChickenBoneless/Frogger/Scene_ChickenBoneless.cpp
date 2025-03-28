@@ -400,60 +400,69 @@ void Scene_ChickenBoneless::spawnHumanEnemy(sf::Vector2f pos, sf::Vector2f vel)
 void Scene_ChickenBoneless::checkFinalScore()
 {
 	if (_score > 10) {
-		//inputName();
-		_game->changeScene("INPUTNAME", std::make_shared<Scene_Inputname>(_game));
+		inputName();
+		//_game->changeScene("INPUTNAME", std::make_shared<Scene_Inputname>(_game));
 	}
 
 }
 
-//void Scene_ChickenBoneless::inputName()
-//{
-//	sf::RenderWindow window(sf::VideoMode(600, 400), "Input name");
-//	sf::RectangleShape box(sf::Vector2f(300, 40));
-//	box.setPosition(100, 150);
-//	box.setFillColor(sf::Color(50, 50, 50));
-//	box.setOutlineThickness(2);
-//	box.setOutlineColor(sf::Color::White);
-//
-//	sf::Font font;
-//	if (!font.loadFromFile("arial.ttf")) {
-//		std::cerr << "Error loading font\n";
-//		return;
-//	}
-//
-//	sf::Text text("", font, 24);
-//	text.setFillColor(sf::Color::White);
-//	text.setPosition(105, 155);
-//
-//	std::string input;
-//	bool isActive = false;
-//
-//	while (window.isOpen()) {
-//		sf::Event event;
-//		while (window.pollEvent(event)) {
-//			if (event.type == sf::Event::Closed) window.close();
-//			if (event.type == sf::Event::MouseButtonPressed) {
-//				isActive = box.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y);
-//				box.setOutlineColor(isActive ? sf::Color::Cyan : sf::Color::White);
-//			}
-//			if (isActive && event.type == sf::Event::TextEntered) {
-//				if (event.text.unicode == 8 && !input.empty()) input.pop_back(); // Backspace
-//				else if (event.text.unicode == 13) { // Enter
-//					isActive = false;
-//					box.setOutlineColor(sf::Color::White);
-//					std::cout << "User Entered: " << input << std::endl;
-//				}
-//				else if (event.text.unicode < 128) input += static_cast<char>(event.text.unicode);
-//			}
-//		}
-//
-//		text.setString(input + (isActive ? "|" : ""));
-//		window.clear();
-//		window.draw(box);
-//		window.draw(text);
-//		window.display();
-//	}
-//}
+void Scene_ChickenBoneless::inputName()
+{
+	sf::RenderWindow window(sf::VideoMode(600, 400), "Input name");
+	sf::RectangleShape box(sf::Vector2f(300, 40));
+	box.setPosition(100, 150);
+	box.setFillColor(sf::Color(50, 50, 50));
+	box.setOutlineThickness(2);
+	box.setOutlineColor(sf::Color::White);
+
+	sf::Font font;
+	if (!font.loadFromFile("../assets/fonts/arial.ttf")) {
+		std::cerr << "Error loading font\n";
+		return;
+	}
+
+	sf::Text text("", font, 24);
+	text.setFillColor(sf::Color::White);
+	text.setPosition(105, 155);
+
+	std::string input;
+	bool isActive = false;
+
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			if (event.type == sf::Event::Closed) window.close();
+			if (event.type == sf::Event::MouseButtonPressed) {
+				isActive = box.getGlobalBounds().contains(event.mouseButton.x, event.mouseButton.y);
+				box.setOutlineColor(isActive ? sf::Color::Cyan : sf::Color::White);
+			}
+			if (isActive && event.type == sf::Event::TextEntered) {
+				if (event.text.unicode == 8 && !input.empty()) input.pop_back(); // Backspace
+				else if (event.text.unicode == 13) { // Enter
+					isActive = false;
+					box.setOutlineColor(sf::Color::White);
+					std::cout << "User Entered: " << input << std::endl;
+
+					// After input
+					_game->window().clear();
+					_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));
+					window.close();
+					break;
+				}
+				else if (event.text.unicode < 128) input += static_cast<char>(event.text.unicode);
+			}
+		}
+
+		text.setString(input + (isActive ? "|" : ""));
+		window.clear();
+		window.draw(box);
+		window.draw(text);
+		window.display();
+
+		/*_game->window().clear();
+		_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));*/
+	}
+}
 
 void Scene_ChickenBoneless::spawnPlayer(sf::Vector2f pos)
 {

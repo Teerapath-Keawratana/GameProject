@@ -144,7 +144,7 @@ void Scene_Inputname::inputName()
 	box.setOutlineColor(sf::Color::White);
 
 	sf::Font font;
-	if (!font.loadFromFile("arial.ttf")) {
+	if (!font.loadFromFile("../assets/fonts/arial.ttf")) {
 		std::cerr << "Error loading font\n";
 		return;
 	}
@@ -170,6 +170,10 @@ void Scene_Inputname::inputName()
 					isActive = false;
 					box.setOutlineColor(sf::Color::White);
 					std::cout << "User Entered: " << input << std::endl;
+
+
+					_game->window().clear();
+					_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));
 				}
 				else if (event.text.unicode < 128) input += static_cast<char>(event.text.unicode);
 			}
@@ -180,5 +184,7 @@ void Scene_Inputname::inputName()
 		window.draw(box);
 		window.draw(text);
 		window.display();
+
+		
 	}
 }

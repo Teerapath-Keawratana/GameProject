@@ -86,7 +86,7 @@ class Scene_ChickenBoneless : public Scene {
 	void						spawnDogEnemy(sf::Vector2f pos, sf::Vector2f vel);
 	void						spawnHumanEnemy(sf::Vector2f pos, sf::Vector2f vel);
 	void						checkFinalScore();
-	//void						inputName();
+	void						inputName();
 
 public:
 	Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath);
