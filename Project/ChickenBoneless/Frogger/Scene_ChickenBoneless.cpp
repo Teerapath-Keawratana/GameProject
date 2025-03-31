@@ -444,9 +444,11 @@ void Scene_ChickenBoneless::inputName()
 					std::cout << "User Entered: " << input << std::endl;
 
 					// After input
+					_game->quitLevel();
 					_game->window().clear();
-					_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));
 					window.close();
+					_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));
+					
 					break;
 				}
 				else if (event.text.unicode < 128) input += static_cast<char>(event.text.unicode);
@@ -873,7 +875,7 @@ void Scene_ChickenBoneless::drawGameOver() {
 	auto& sprite = end->getComponent<CAnimation>().animation.getSprite();
 
 	centerOrigin(sprite);
-
+	
 
 	std::string strEsc = "Press ESC to Exit";
 	sf::Text textEsc = sf::Text(strEsc, Assets::getInstance().getFont("Arial"), 40);
