@@ -87,6 +87,9 @@ class Scene_ChickenBoneless : public Scene {
 	void						spawnHumanEnemy(sf::Vector2f pos, sf::Vector2f vel);
 	void						checkFinalScore();
 	void						inputName();
+	void						loadAllHighscore(const std::string& filename);
+	std::vector<ScoreEntry> _scores;
+	ScoreEntry lastEntry;
 
 public:
 	Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath);

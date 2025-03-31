@@ -42,6 +42,8 @@ void Scene_ChickenBoneless::init(const std::string& levelPath) {
 	spawnEnemy();
 	std::cout << "World bound" << _worldBounds << " Left " << _worldBounds.left << "\n";
 
+	std::string filename = "../assets/highscore.txt";
+	loadAllHighscore(filename);
 	
 }
 
@@ -399,7 +401,7 @@ void Scene_ChickenBoneless::spawnHumanEnemy(sf::Vector2f pos, sf::Vector2f vel)
 
 void Scene_ChickenBoneless::checkFinalScore()
 {
-	if (_score > 10) {
+	if (_score > lastEntry.score) {
 		inputName();
 		//_game->changeScene("INPUTNAME", std::make_shared<Scene_Inputname>(_game));
 	}
@@ -464,6 +466,37 @@ void Scene_ChickenBoneless::inputName()
 		/*_game->window().clear();
 		_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));*/
 	}
+}
+
+void Scene_ChickenBoneless::loadAllHighscore(const std::string& filename)
+{
+	std::ifstream config(filename);
+	std::string name;
+	int score;
+
+	if (config.fail()) {
+		std::cerr << "Open file " << filename << " failed\n";
+		config.close();
+		exit(1);
+	}
+
+	_scores.clear();
+
+	while (!config.eof()) {
+		config >> name >> score;
+		_scores.push_back({ name, score });
+	}
+	config.close();
+
+	// Sort scores in descending order
+	std::sort(_scores.begin(), _scores.end(), [](const ScoreEntry& a, const ScoreEntry& b) {
+		return a.score > b.score;
+		});
+
+	//ScoreEntry lastEntry = _scores.back();
+	lastEntry = _scores.back();
+
+	std::cout << "The last entry from CK Scene is: " << lastEntry.name << " with score " << lastEntry.score << std::endl;
 }
 
 void Scene_ChickenBoneless::spawnPlayer(sf::Vector2f pos)
