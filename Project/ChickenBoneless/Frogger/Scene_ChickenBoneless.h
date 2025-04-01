@@ -90,6 +90,7 @@ class Scene_ChickenBoneless : public Scene {
 	void						loadAllHighscore(const std::string& filename);
 	std::vector<ScoreEntry> _scores;
 	ScoreEntry lastEntry;
+	void saveHighScores(const std::vector<ScoreEntry>& scores, const std::string& filename);
 
 public:
 	Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath);

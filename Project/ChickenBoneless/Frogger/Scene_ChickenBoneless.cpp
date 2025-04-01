@@ -21,6 +21,8 @@ namespace {
 	std::mt19937 rng(rd());
 }
 
+std::string highscorefilename = "../assets/highscore.txt";
+
 Scene_ChickenBoneless::Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath)
 	: Scene(gameEngine)
 {
@@ -42,8 +44,8 @@ void Scene_ChickenBoneless::init(const std::string& levelPath) {
 	spawnEnemy();
 	std::cout << "World bound" << _worldBounds << " Left " << _worldBounds.left << "\n";
 
-	std::string filename = "../assets/highscore.txt";
-	loadAllHighscore(filename);
+	
+	loadAllHighscore(highscorefilename);
 	
 }
 
@@ -445,6 +447,13 @@ void Scene_ChickenBoneless::inputName()
 					box.setOutlineColor(sf::Color::White);
 					std::cout << "User Entered: " << input << std::endl;
 
+					_scores.back() = { input, _score };
+
+					std::cout << "Last vector name is " << _scores[_scores.size() - 1].name
+						<< " Last vector score is " << _scores[_scores.size() - 1].score;
+
+					saveHighScores(_scores, highscorefilename);
+
 					// After input
 					_game->quitLevel();
 					_game->window().clear();
@@ -497,6 +506,22 @@ void Scene_ChickenBoneless::loadAllHighscore(const std::string& filename)
 	lastEntry = _scores.back();
 
 	std::cout << "The last entry from CK Scene is: " << lastEntry.name << " with score " << lastEntry.score << std::endl;
+}
+
+void Scene_ChickenBoneless::saveHighScores(const std::vector<ScoreEntry>& scores, const std::string& filename)
+{
+	std::ofstream outFile(filename);
+
+	if (!outFile) {
+		std::cerr << "Error: Could not open file for writing.\n";
+		return;
+	}
+
+	for (const auto& entry : scores) {
+		outFile << entry.name << " " << entry.score << "\n";  // Writing in "Name Score" format
+	}
+
+	outFile.close();
 }
 
 void Scene_ChickenBoneless::spawnPlayer(sf::Vector2f pos)

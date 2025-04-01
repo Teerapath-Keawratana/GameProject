@@ -1,3 +1,6 @@
-AAA		30
-BBB		200
-TTT		300
+TTT 300
+BBB 200
+noooo 60
+noooo 60
+ww 40
+yes 70

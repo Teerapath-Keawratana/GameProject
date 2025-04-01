@@ -86,7 +86,7 @@ void Scene_HighScore::init()
     }
     _backgroundSprite.setTexture(_backgroundTexture);
 
-    loadHighScores(filename);
+   // loadHighScores(filename);
 
     //std::cout << "last score name:" << scores[scores.size() - 1].name << "\n";
     //std::cout << "last score score:" << scores[scores.size() - 1].score << "\n";
@@ -99,6 +99,7 @@ void Scene_HighScore::init()
 void Scene_HighScore::update(sf::Time dt)
 {
     _entityManager.update();
+    loadHighScores(filename);
 }
 
 void Scene_HighScore::sRender()
