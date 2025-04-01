@@ -39,9 +39,9 @@ void Scene_HighScore::loadHighScores(const std::string& filename) {
         return a.score > b.score;
         });
 
-    ScoreEntry lastEntry = scores.back();
+   // ScoreEntry lastEntry = scores.back();
 
-    std::cout << "The last entry is: " << lastEntry.name << " with score " << lastEntry.score << std::endl;
+   // std::cout << "The last entry is: " << lastEntry.name << " with score " << lastEntry.score << std::endl;
 
     //return scores;
 }

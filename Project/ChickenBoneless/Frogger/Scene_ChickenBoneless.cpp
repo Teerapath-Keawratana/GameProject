@@ -447,10 +447,22 @@ void Scene_ChickenBoneless::inputName()
 					box.setOutlineColor(sf::Color::White);
 					std::cout << "User Entered: " << input << std::endl;
 
-					_scores.back() = { input, _score };
+					// why not replace last value
+					//_scores.back() = { input, _score };
+					_scores[_scores.size() - 1] = { input, _score };
+
+					// show member vector _score in console
+					
+					for (const auto& entry : _scores)
+					{
+						std::cout << "Name: " << entry.name << " Score: " << entry.score << "\n";
+					}
+
+					/*_scores[_scores.size() - 1].name = input;
+					_scores[_scores.size() - 1].score = _score;*/
 
 					std::cout << "Last vector name is " << _scores[_scores.size() - 1].name
-						<< " Last vector score is " << _scores[_scores.size() - 1].score;
+						<< " Last vector score is " << _scores[_scores.size() - 1].score << "\n";
 
 					saveHighScores(_scores, highscorefilename);
 
@@ -508,7 +520,7 @@ void Scene_ChickenBoneless::loadAllHighscore(const std::string& filename)
 	std::cout << "The last entry from CK Scene is: " << lastEntry.name << " with score " << lastEntry.score << std::endl;
 }
 
-void Scene_ChickenBoneless::saveHighScores(const std::vector<ScoreEntry>& scores, const std::string& filename)
+void Scene_ChickenBoneless::saveHighScores(const std::vector<ScoreEntry>& sc, const std::string& filename)
 {
 	std::ofstream outFile(filename);
 
@@ -517,7 +529,7 @@ void Scene_ChickenBoneless::saveHighScores(const std::vector<ScoreEntry>& scores
 		return;
 	}
 
-	for (const auto& entry : scores) {
+	for (const auto& entry : sc) {
 		outFile << entry.name << " " << entry.score << "\n";  // Writing in "Name Score" format
 	}
 

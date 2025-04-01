@@ -1,6 +1,4 @@
 TTT 300
 BBB 200
-noooo 60
-noooo 60
-ww 40
-yes 70
+CC 20
+todo 30
