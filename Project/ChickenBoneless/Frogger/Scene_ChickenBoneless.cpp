@@ -733,7 +733,28 @@ void Scene_ChickenBoneless::sMovement(sf::Time dt)
 
 void Scene_ChickenBoneless::sCollisions()
 {
-	/// Player withe cat
+	/// Player with pickup
+	if (_player) {
+		auto& playerTransform = _player->getComponent<CTransform>();
+		for (auto& pickup : _entityManager.getEntities("Pickup")) {
+			auto& pickupTransform = pickup->getComponent<CTransform>();
+			
+
+			// Check for collision between player and pickup
+			float distance = length(playerTransform.pos - pickupTransform.pos);
+			if (distance < 10.f) {
+				// Collision detected: destroy both player and enemy
+				//enemy->destroy();
+				/*_player->destroy();
+				_isFinish = true;
+				_lives -= 1;
+				drawGameOver();*/
+				break;
+			}
+		}
+	}
+
+	/// Player with cat
 	if (_player) {
 		auto& playerTransform = _player->getComponent<CTransform>();
 		for (auto& enemy : _entityManager.getEntities("CatEnemy")) {
