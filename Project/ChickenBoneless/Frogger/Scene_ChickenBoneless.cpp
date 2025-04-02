@@ -26,17 +26,6 @@ std::string highscorefilename = "../assets/highscore.txt";
 void Scene_ChickenBoneless::dropPickup(sf::Vector2f pos)
 {
 
-	/*auto enemy = _entityManager.addEntity("HumanEnemy");
-	enemy->addComponent<CTransform>(pos, vel);
-
-	auto bb = enemy->addComponent<CAnimation>(Assets::getInstance().getAnimation("humanleft")).animation.getBB();
-	enemy->addComponent<CBoundingBox>(bb);
-	auto& sprite = enemy->getComponent<CAnimation>().animation.getSprite();
-
-	centerOrigin(sprite);*/
-
-
-
 
 	auto p = _entityManager.addEntity("Pickup");
 	p->addComponent<CTransform>(pos);
@@ -45,16 +34,8 @@ void Scene_ChickenBoneless::dropPickup(sf::Vector2f pos)
 	auto& sprite = p->getComponent<CAnimation>().animation.getSprite();
 
 	centerOrigin(sprite);
+	p->addComponent<CLifespan>(5);
 
-
-	//auto& sprite = p->addComponent<CSprite>(Assets::getInstance().getTexture("Bone")).sprite;
-	//sprite.setTextureRect(txtRect);
-	//centerOrigin(sprite);
-	//p->addComponent<CTransform>(pos);
-	//p->addComponent<CBoundingBox>(txtRect.width, txtRect.height);
-	// p->addComponent<CBoundingBox>(sf::Vector2f(10,10));
-	//pickup
-	//p->addComponent<CState>().state = type;
 }
 
 Scene_ChickenBoneless::Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath)
@@ -70,7 +51,7 @@ void Scene_ChickenBoneless::init(const std::string& levelPath) {
 	sf::Vector2f spawnPos{ _game->windowSize().x / 2.f, _game->windowSize().y - 20.f };
 
 	spawnPlayer(spawnPos);
-	
+	dropPickup(spawnPos);
 	//sSpawnMovingEntities();
 	spawnLife();
 
@@ -734,25 +715,28 @@ void Scene_ChickenBoneless::sMovement(sf::Time dt)
 void Scene_ChickenBoneless::sCollisions()
 {
 	/// Player with pickup
-	if (_player) {
-		auto& playerTransform = _player->getComponent<CTransform>();
-		for (auto& pickup : _entityManager.getEntities("Pickup")) {
-			auto& pickupTransform = pickup->getComponent<CTransform>();
-			
+	//
+	// Not use now
+	// 
+	//if (_player) {
+	//	auto& playerTransform = _player->getComponent<CTransform>();
+	//	for (auto& pickup : _entityManager.getEntities("Pickup")) {
+	//		auto& pickupTransform = pickup->getComponent<CTransform>();
+	//		
 
-			// Check for collision between player and pickup
-			float distance = length(playerTransform.pos - pickupTransform.pos);
-			if (distance < 10.f) {
-				// Collision detected: destroy both player and enemy
-				//enemy->destroy();
-				/*_player->destroy();
-				_isFinish = true;
-				_lives -= 1;
-				drawGameOver();*/
-				break;
-			}
-		}
-	}
+	//		// Check for collision between player and pickup
+	//		float distance = length(playerTransform.pos - pickupTransform.pos);
+	//		if (distance < 10.f) {
+	//			// Collision detected: destroy both pickup
+	//			pickup->destroy();
+	//			/*_player->destroy();
+	//			_isFinish = true;
+	//			_lives -= 1;
+	//			drawGameOver();*/
+	//			break;
+	//		}
+	//	}
+	//}
 
 	/// Player with cat
 	if (_player) {
