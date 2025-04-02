@@ -35,7 +35,7 @@ void Scene_ChickenBoneless::dropPickup(sf::Vector2f pos)
 
 	centerOrigin(sprite);
 	//p->addComponent<CLifespan>(5);
-	timer.restart();
+	
 
 }
 
@@ -733,7 +733,7 @@ void Scene_ChickenBoneless::sCollisions()
 				// Collision detected: destroy both pickup
 				pickup->destroy();
 				_pickupActive = true;
-				
+				timer.restart();
 				break;
 			}
 		}
@@ -963,6 +963,13 @@ void Scene_ChickenBoneless::drawScore(int totalScore) {
 
 	std::string str = std::to_string(_scoreTotal + _score);
 	sf::Text text = sf::Text("SCORE: " + str, Assets::getInstance().getFont("Arial"), 32);
+
+	//text.setFillColor(sf::Color(99, 80, 50));
+
+	text.setStyle(sf::Text::Bold); // Bold text
+
+	text.setOutlineColor(sf::Color(50, 50, 50)); // Change to desired outline color
+	text.setOutlineThickness(5);
 
 	text.setPosition(10.f, 10.f);
 	_game->window().draw(text);

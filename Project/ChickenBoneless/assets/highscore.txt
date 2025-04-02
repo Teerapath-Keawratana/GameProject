@@ -1,5 +1,5 @@
-tee 280
-tee 120
-tee 110
-AA 100
 tee 420
+888 290
+tee 280
+ttt 270
+Tt 330
