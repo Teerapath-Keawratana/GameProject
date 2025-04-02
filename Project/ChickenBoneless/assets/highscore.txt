@@ -1,5 +1,5 @@
+tee 280
+tee 120
+tee 110
 AA 100
-BB 80
-CC 70
-DD 60
-ff 10
+tee 420

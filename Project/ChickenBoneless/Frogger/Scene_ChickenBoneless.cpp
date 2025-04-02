@@ -34,7 +34,8 @@ void Scene_ChickenBoneless::dropPickup(sf::Vector2f pos)
 	auto& sprite = p->getComponent<CAnimation>().animation.getSprite();
 
 	centerOrigin(sprite);
-	p->addComponent<CLifespan>(5);
+	//p->addComponent<CLifespan>(5);
+	timer.restart();
 
 }
 
@@ -51,7 +52,7 @@ void Scene_ChickenBoneless::init(const std::string& levelPath) {
 	sf::Vector2f spawnPos{ _game->windowSize().x / 2.f, _game->windowSize().y - 20.f };
 
 	spawnPlayer(spawnPos);
-	dropPickup(spawnPos);
+	
 	//sSpawnMovingEntities();
 	spawnLife();
 
@@ -249,6 +250,10 @@ void Scene_ChickenBoneless::spawnEnemy()
 		case 3:
 			spawnHumanEnemy(pos, vel * 0.5f);
 			break;
+		/*case 4:
+			dropPickup(pos);
+			break;*/
+
 		default:
 			break;
 		}
@@ -715,28 +720,24 @@ void Scene_ChickenBoneless::sMovement(sf::Time dt)
 void Scene_ChickenBoneless::sCollisions()
 {
 	/// Player with pickup
-	//
-	// Not use now
-	// 
-	//if (_player) {
-	//	auto& playerTransform = _player->getComponent<CTransform>();
-	//	for (auto& pickup : _entityManager.getEntities("Pickup")) {
-	//		auto& pickupTransform = pickup->getComponent<CTransform>();
-	//		
+	
+	if (_player) {
+		auto& playerTransform = _player->getComponent<CTransform>();
+		for (auto& pickup : _entityManager.getEntities("Pickup")) {
+			auto& pickupTransform = pickup->getComponent<CTransform>();
+			
 
-	//		// Check for collision between player and pickup
-	//		float distance = length(playerTransform.pos - pickupTransform.pos);
-	//		if (distance < 10.f) {
-	//			// Collision detected: destroy both pickup
-	//			pickup->destroy();
-	//			/*_player->destroy();
-	//			_isFinish = true;
-	//			_lives -= 1;
-	//			drawGameOver();*/
-	//			break;
-	//		}
-	//	}
-	//}
+			// Check for collision between player and pickup
+			float distance = length(playerTransform.pos - pickupTransform.pos);
+			if (distance < 20.f) {
+				// Collision detected: destroy both pickup
+				pickup->destroy();
+				_pickupActive = true;
+				
+				break;
+			}
+		}
+	}
 
 	/// Player with cat
 	if (_player) {
@@ -775,7 +776,15 @@ void Scene_ChickenBoneless::sCollisions()
 				//_score += enemy->getComponent<CScore>().score;  // Add score
 				
 				enemy->destroy();
-				totalScore += 10;
+
+				if (_pickupActive) {
+					totalScore += 20;
+				}
+				else
+				{
+					totalScore += 10;
+				}
+				
 				drawScore(totalScore);
 				break;
 			}
@@ -821,7 +830,14 @@ void Scene_ChickenBoneless::sCollisions()
 				//_score += enemy->getComponent<CScore>().score;  // Add score
 
 				enemy->destroy();
-				totalScore += 10;
+				//totalScore += 10;
+				if (_pickupActive) {
+					totalScore += 20;
+				}
+				else
+				{
+					totalScore += 10;
+				}
 				drawScore(totalScore);
 				break;
 			}
@@ -867,8 +883,16 @@ void Scene_ChickenBoneless::sCollisions()
 				//_score += enemy->getComponent<CScore>().score;  // Add score
 
 				enemy->destroy();
-				totalScore += 10;
+				//totalScore += 10;
+				if (_pickupActive) {
+					totalScore += 20;
+				}
+				else
+				{
+					totalScore += 10;
+				}
 				drawScore(totalScore);
+				dropPickup(enemyTransform.pos);
 				break;
 			}
 		}
@@ -894,6 +918,13 @@ void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 	sLifespan(dt);
 	spawnTarget();
 	sGuideHumans(dt);
+
+	// not working
+
+
+	if (_pickupActive && timer.getElapsedTime().asSeconds() > 10) {
+		_pickupActive = false; // Deactivate after 10 seconds
+	}
 	
 
 }

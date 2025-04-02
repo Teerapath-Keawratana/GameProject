@@ -46,6 +46,8 @@ class Scene_ChickenBoneless : public Scene {
 	float					_timer = 90.f;
 	const float				_timerThreshold = 90.f;
 
+	bool					_pickupActive = false;
+
 
 	//systems
 	void                    sMovement(sf::Time dt);
@@ -95,7 +97,7 @@ class Scene_ChickenBoneless : public Scene {
 	void saveHighScores(const std::vector<ScoreEntry>& scores, const std::string& filename);
 
 	//pickup
-
+	sf::Clock timer;
 	void						dropPickup(sf::Vector2f pos);
 
 public:
