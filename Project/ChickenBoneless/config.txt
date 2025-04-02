@@ -22,6 +22,7 @@ Texture Dog      	../assets/Textures/dog.png
 Texture Cat      	../assets/Textures/Cat.png
 Texture Bullet      	../assets/Textures/bone.png
 Texture ChickenBoneless      	../assets/Textures/ChickenBoneless.png
+Texture Bone      	../assets/Textures/bone.png
 
 # Sprites
 Sprite Background       Background   0 0  480 600
