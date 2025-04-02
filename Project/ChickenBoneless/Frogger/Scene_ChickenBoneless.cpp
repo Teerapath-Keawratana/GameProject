@@ -23,6 +23,11 @@ namespace {
 
 std::string highscorefilename = "../assets/highscore.txt";
 
+void Scene_ChickenBoneless::dropPickup(sf::Vector2f pos)
+{
+
+}
+
 Scene_ChickenBoneless::Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath)
 	: Scene(gameEngine)
 {
@@ -40,7 +45,7 @@ void Scene_ChickenBoneless::init(const std::string& levelPath) {
 	spawnLife();
 
 	MusicPlayer::getInstance().play("gameTheme");
-	MusicPlayer::getInstance().setVolume(100);
+	MusicPlayer::getInstance().setVolume(10);
 	spawnEnemy();
 	std::cout << "World bound" << _worldBounds << " Left " << _worldBounds.left << "\n";
 
@@ -342,16 +347,35 @@ void Scene_ChickenBoneless::spawnTarget()
 	// Get the mouse position relative to the window
 	//sf::Vector2f spawnPos{ _game->windowSize().x, _game->windowSize().y };
 
+
 	sf::Vector2i mousePos = sf::Mouse::getPosition();
 
+	//mouse Position
 	sf::Vector2f mPos(mousePos);
-	
-	std::cout << "Mouse position: (" << mousePos.x << ", " << mousePos.y << ")\n"; 
-
 	mPos.x = mPos.x - 350;
 	mPos.y = mPos.y - 150;
+	std::cout << "Mouse position: (" << mousePos.x << ", " << mousePos.y << ")\n"; 
+
+
+	// Player Position
+	sf::Vector2f pPos;
+	pPos = _player->getComponent<CTransform>().pos;
+
+	std::cout << "Player position for distance " << pPos.x << "and " << pPos.y << "\n";
+
 	
 
+	// Find distance
+	float distance;
+
+	distance = sqrt(((abs(mPos.x) * abs(mPos.x)) - pPos.x * pPos.x) + ((abs(mPos.y) * abs(mPos.y)) - pPos.y * pPos.y));
+	
+
+	std::cout << "Distance is " << distance << "\n";
+	
+	//find distance mouse and player
+
+	// if distance less than Radius 
 	_target = _entityManager.addEntity("target");
 	_target->addComponent<CTransform>(mPos);
 
@@ -362,6 +386,8 @@ void Scene_ChickenBoneless::spawnTarget()
 	auto& sprite = _target->getComponent<CAnimation>().animation.getSprite();
 
 	centerOrigin(sprite);
+
+	//else not show
 }
 
 void Scene_ChickenBoneless::spawnCatEnemy(sf::Vector2f pos, sf::Vector2f vel)
@@ -412,7 +438,8 @@ void Scene_ChickenBoneless::checkFinalScore()
 
 void Scene_ChickenBoneless::inputName()
 {
-	sf::RenderWindow window(sf::VideoMode(600, 400), "Input name");
+	sf::RenderWindow window(sf::VideoMode(600, 400), "Input Your Name to Leaderboard");
+	// input box
 	sf::RectangleShape box(sf::Vector2f(300, 40));
 	box.setPosition(100, 150);
 	box.setFillColor(sf::Color(50, 50, 50));
@@ -425,7 +452,8 @@ void Scene_ChickenBoneless::inputName()
 		return;
 	}
 
-	sf::Text text("", font, 24);
+	//
+	sf::Text text("Input Your Name", font, 24);
 	text.setFillColor(sf::Color::White);
 	text.setPosition(105, 155);
 
@@ -477,9 +505,19 @@ void Scene_ChickenBoneless::inputName()
 				else if (event.text.unicode < 128) input += static_cast<char>(event.text.unicode);
 			}
 		}
+		// Update displayed text
+		if (input.empty() && !isActive) {
+			text.setString("Input Your Name");
+			text.setFillColor(sf::Color(200, 200, 200)); // Placeholder text color
+		}
+		else {
+			text.setString(input + (isActive ? "|" : ""));
+			text.setFillColor(sf::Color::White); // Regular text color
+		}
 
-		text.setString(input + (isActive ? "|" : ""));
-		window.clear();
+		//text.setString(input + (isActive ? "|" : ""));
+		// back ground window
+		window.clear(sf::Color(144, 238, 144));
 		window.draw(box);
 		window.draw(text);
 		window.display();
@@ -505,7 +543,8 @@ void Scene_ChickenBoneless::loadAllHighscore(const std::string& filename)
 
 	while (!config.eof()) {
 		config >> name >> score;
-		_scores.push_back({ name, score });
+		if(!config.eof())
+			_scores.push_back({ name, score });
 	}
 	config.close();
 

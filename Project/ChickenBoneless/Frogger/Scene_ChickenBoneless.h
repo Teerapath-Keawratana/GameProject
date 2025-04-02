@@ -85,12 +85,18 @@ class Scene_ChickenBoneless : public Scene {
 	void						spawnCatEnemy(sf::Vector2f pos, sf::Vector2f vel);
 	void						spawnDogEnemy(sf::Vector2f pos, sf::Vector2f vel);
 	void						spawnHumanEnemy(sf::Vector2f pos, sf::Vector2f vel);
+
+	// High Score
 	void						checkFinalScore();
 	void						inputName();
 	void						loadAllHighscore(const std::string& filename);
 	std::vector<ScoreEntry> _scores;
 	ScoreEntry lastEntry;
 	void saveHighScores(const std::vector<ScoreEntry>& scores, const std::string& filename);
+
+	//pickup
+
+	void						dropPickup(sf::Vector2f pos);
 
 public:
 	Scene_ChickenBoneless(GameEngine* gameEngine, const std::string& levelPath);

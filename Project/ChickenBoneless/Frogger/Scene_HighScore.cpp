@@ -30,7 +30,8 @@ void Scene_HighScore::loadHighScores(const std::string& filename) {
     
     while (!config.eof()) {
         config >> name >> score;
-        scores.push_back({ name, score });
+        if(!config.eof())
+            scores.push_back({ name, score });
     }
     config.close();
 
@@ -60,7 +61,7 @@ Scene_HighScore::Scene_HighScore(GameEngine* gameEngine)
 void Scene_HighScore::init()
 {
     MusicPlayer::getInstance().play("gameTheme");
-    MusicPlayer::getInstance().setVolume(90);
+    MusicPlayer::getInstance().setVolume(10);
 
     registerAction(sf::Keyboard::W, "UP");
     registerAction(sf::Keyboard::Up, "UP");
@@ -109,7 +110,7 @@ void Scene_HighScore::sRender()
     _game->window().setView(view);
 
     static const sf::Color selectedColor(255, 255, 255);
-    static const sf::Color normalColor(0, 0, 0);
+    static const sf::Color normalColor(99, 80, 50);
 
     sf::Text footer("PLAY:D    MENU: ESC OR M",
         Assets::getInstance().getFont("main"), 20);
@@ -142,6 +143,11 @@ void Scene_HighScore::sRender()
     scoreText.setFont(Assets::getInstance().getFont("main"));
     scoreText.setCharacterSize(64);
     scoreText.setFillColor(normalColor);
+
+    scoreText.setStyle(sf::Text::Bold); // Bold text
+
+    scoreText.setOutlineColor(sf::Color(50, 50, 50)); // Change to desired outline color
+    scoreText.setOutlineThickness(5);
     
     //_game->window().clear();
     float yOffset = 200;
@@ -155,7 +161,7 @@ void Scene_HighScore::sRender()
     
     _game->window().draw(scoreText);
 
-    _game->window().draw(footer);
+   // _game->window().draw(footer);
 
 
 }

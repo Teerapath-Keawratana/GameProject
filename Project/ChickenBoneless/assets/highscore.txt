@@ -1,4 +1,5 @@
-TTT 300
-BBB 200
-CC 20
-todo 30
+AA 100
+BB 80
+CC 70
+DD 60
+ff 10

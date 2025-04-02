@@ -20,7 +20,7 @@ Scene_Inputname::Scene_Inputname(GameEngine* gameEngine)
 void Scene_Inputname::init()
 {
 	MusicPlayer::getInstance().play("gameTheme");
-	MusicPlayer::getInstance().setVolume(90);
+	MusicPlayer::getInstance().setVolume(10);
 
 	registerAction(sf::Keyboard::W, "UP");
 	registerAction(sf::Keyboard::Up, "UP");

@@ -20,7 +20,7 @@ Scene_Instruction::Scene_Instruction(GameEngine* gameEngine)
 void Scene_Instruction::init()
 {
 	MusicPlayer::getInstance().play("gameTheme");
-	MusicPlayer::getInstance().setVolume(90);
+	MusicPlayer::getInstance().setVolume(10);
 
 	registerAction(sf::Keyboard::W, "UP");
 	registerAction(sf::Keyboard::Up, "UP");
@@ -47,7 +47,7 @@ void Scene_Instruction::init()
 
 
 	// Load background texture
-	if (!_backgroundTexture.loadFromFile("../assets/Textures/backgroundMenu.png"))
+	if (!_backgroundTexture.loadFromFile("../assets/Textures/instruction.png"))
 	{
 		std::cerr << "Error loading background image!" << std::endl;
 	}
@@ -87,17 +87,17 @@ void Scene_Instruction::sRender()
 	_menuText.setFillColor(normalColor);
 	_menuText.setString(_title);
 	_menuText.setPosition(10, 10);
-	_game->window().draw(_menuText);
+	//_game->window().draw(_menuText);
 
 	for (size_t i{ 0 }; i < _menuStrings.size(); ++i)
 	{
 		_menuText.setFillColor((i == _menuIndex ? selectedColor : normalColor));
 		_menuText.setPosition(32, 32 + (i + 1) * 96);
 		_menuText.setString(_menuStrings.at(i));
-		_game->window().draw(_menuText);
+		//_game->window().draw(_menuText);
 	}
 
-	_game->window().draw(footer);
+	//_game->window().draw(footer);
 	//m_game->window().display();
 
 }
