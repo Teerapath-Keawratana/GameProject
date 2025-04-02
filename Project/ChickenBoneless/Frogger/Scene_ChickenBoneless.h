@@ -98,6 +98,7 @@ class Scene_ChickenBoneless : public Scene {
 
 	//pickup
 	sf::Clock timer;
+	//sf::Clock droppickupTimer;
 	void						dropPickup(sf::Vector2f pos);
 
 public:

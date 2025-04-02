@@ -729,7 +729,7 @@ void Scene_ChickenBoneless::sCollisions()
 
 			// Check for collision between player and pickup
 			float distance = length(playerTransform.pos - pickupTransform.pos);
-			if (distance < 20.f) {
+			if (distance < 40.f) {
 				// Collision detected: destroy both pickup
 				pickup->destroy();
 				_pickupActive = true;
@@ -922,11 +922,15 @@ void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 	// not working
 
 
-	if (_pickupActive && timer.getElapsedTime().asSeconds() > 10) {
+	if (_pickupActive && timer.getElapsedTime().asSeconds() > 5) {
 		_pickupActive = false; // Deactivate after 10 seconds
 	}
 	
 
+	/*if ( droppickupTimer.getElapsedTime().asSeconds() > 5) {
+		auto& pickup = _entityManager.getEntities("Pickup");
+		pickup->destroy();
+	}*/
 }
 
 
