@@ -359,7 +359,7 @@ void Scene_ChickenBoneless::sLifespan(sf::Time dt)
 }
 
 void Scene_ChickenBoneless::spawnTarget()
-{
+{/*
 	// Get the mouse position relative to the window
 	//sf::Vector2f spawnPos{ _game->windowSize().x, _game->windowSize().y };
 
@@ -383,11 +383,9 @@ void Scene_ChickenBoneless::spawnTarget()
 
 	// Find distance
 	float distance;
-
 	distance = sqrt(((abs(mPos.x) * abs(mPos.x)) - pPos.x * pPos.x) + ((abs(mPos.y) * abs(mPos.y)) - pPos.y * pPos.y));
-	
-
 	std::cout << "Distance is " << distance << "\n";
+
 	
 	//find distance mouse and player
 
@@ -403,7 +401,40 @@ void Scene_ChickenBoneless::spawnTarget()
 
 	centerOrigin(sprite);
 
-	//else not show
+	//else not show*/
+
+	// Mouse Position (adjust for window offset)
+	sf::Vector2i mousePos = sf::Mouse::getPosition();
+	sf::Vector2f mPos(static_cast<float>(mousePos.x) - 350.f, static_cast<float>(mousePos.y) - 150.f);
+	std::cout << "Mouse position: (" << mPos.x << ", " << mPos.y << ")\n";
+
+	// Player Position
+	sf::Vector2f pPos = _player->getComponent<CTransform>().pos;
+	std::cout << "Player position: (" << pPos.x << ", " << pPos.y << ")\n";
+
+	// Vector from player to mouse
+	sf::Vector2f dir = mPos - pPos;
+	float len = length(dir);
+	std::cout << "Distance from player to mouse: " << len << "\n";
+
+	// If distance > 60, normalize direction and scale to 60
+	if (len > 300.f)
+	{
+		dir = normalize(dir) * 300.f;
+		mPos = pPos + dir;
+		std::cout << "Mouse is out of range, adjusting spawn position to: (" << mPos.x << ", " << mPos.y << ")\n";
+	}
+
+	// Spawn the target at adjusted position
+	_target = _entityManager.addEntity("target");
+	_target->addComponent<CTransform>(mPos);
+	_target->destroy();
+	_target->addComponent<CAnimation>(Assets::getInstance().getAnimation("target"));
+	auto bb = _target->getComponent<CAnimation>().animation.getBB();
+	_target->addComponent<CBoundingBox>(bb);
+
+	auto& sprite = _target->getComponent<CAnimation>().animation.getSprite();
+	centerOrigin(sprite);
 }
 
 void Scene_ChickenBoneless::spawnCatEnemy(sf::Vector2f pos, sf::Vector2f vel)
