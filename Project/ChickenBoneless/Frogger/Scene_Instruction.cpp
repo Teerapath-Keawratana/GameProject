@@ -3,6 +3,7 @@
 #include "MusicPlayer.h"
 #include <memory>
 #include "Scene_HighScore.h"
+#include "Scene_Menu.h"
 
 void Scene_Instruction::onEnd()
 {
@@ -27,6 +28,7 @@ void Scene_Instruction::init()
 	registerAction(sf::Keyboard::S, "DOWN");
 	registerAction(sf::Keyboard::Down, "DOWN");
 	registerAction(sf::Keyboard::D, "PLAY");
+	registerAction(sf::Keyboard::M, "MENU");
 	registerAction(sf::Keyboard::Escape, "QUIT");
 	registerAction(sf::Keyboard::H, "HIGHSCORE");
 	registerAction(sf::Keyboard::I, "INSTRUCTION");
@@ -122,6 +124,10 @@ void Scene_Instruction::sDoAction(const Command& action)
 		else if (action.name() == "HIGHSCORE")
 		{
 			_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));
+		}
+		else if (action.name() == "MENU")
+		{
+			_game->changeScene("MENU", std::make_shared<Scene_Menu>(_game));
 		}
 		else if (action.name() == "QUIT")
 		{
