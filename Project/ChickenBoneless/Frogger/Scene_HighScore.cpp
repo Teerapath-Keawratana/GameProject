@@ -110,7 +110,7 @@ void Scene_HighScore::sRender()
     _game->window().setView(view);
 
     static const sf::Color selectedColor(255, 255, 255);
-    static const sf::Color normalColor(99, 80, 50);
+    static const sf::Color normalColor(139, 47, 47);
 
     sf::Text footer("PLAY:D    MENU: ESC OR M",
         Assets::getInstance().getFont("main"), 20);
@@ -153,8 +153,8 @@ void Scene_HighScore::sRender()
     float yOffset = 200;
     for (const auto& entry : scores)
     {
-        scoreText.setString(entry.name + "       -      " + std::to_string(entry.score));
-        scoreText.setPosition(400, yOffset);
+        scoreText.setString(entry.name + "          -         " + std::to_string(entry.score));
+        scoreText.setPosition(350, yOffset);
         _game->window().draw(scoreText);
         yOffset += 80;
     }

@@ -1,5 +1,5 @@
-tee 420
-888 290
-tee 280
-ttt 270
-Tt 330
+AAA 100
+AAA 40
+AAA 30
+AAA 20
+AAA 10

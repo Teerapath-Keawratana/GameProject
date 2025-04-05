@@ -29,7 +29,7 @@ void Scene_Instruction::init()
 	registerAction(sf::Keyboard::Down, "DOWN");
 	registerAction(sf::Keyboard::D, "PLAY");
 	registerAction(sf::Keyboard::M, "MENU");
-	registerAction(sf::Keyboard::Escape, "QUIT");
+	registerAction(sf::Keyboard::Escape, "MENU");
 	registerAction(sf::Keyboard::H, "HIGHSCORE");
 	registerAction(sf::Keyboard::I, "INSTRUCTION");
 
