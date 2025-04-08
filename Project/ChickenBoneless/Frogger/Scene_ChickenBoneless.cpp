@@ -73,12 +73,13 @@ void Scene_ChickenBoneless::update(sf::Time dt)
 		_timer -= dt.asSeconds();
 
 	if (_timer <= 0.f) {
-		_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("die"));
+		/*_player->addComponent<CAnimation>(Assets::getInstance().getAnimation("die"));
 		SoundPlayer::getInstance().play("death", _player->getComponent<CTransform>().pos);
-		_lives--;
-		if (_player->getComponent<CTransform>().pos == _player->getComponent<CTransform>().pos) {
+		_lives--;*/
+		/*if (_player->getComponent<CTransform>().pos == _player->getComponent<CTransform>().pos) {
 			_timer = _timerThreshold;
-		}
+		}*/
+		
 	}
 	sUpdate(dt);
 }
@@ -120,7 +121,10 @@ void Scene_ChickenBoneless::sRender()
 	}
 	drawScore(totalScore);
 	drawLife();
-	drawTimer();
+	if (_timer >= 0) {
+		drawTimer();
+	}
+	
 	if (_scoreTotal == _winningScore && _lives > 0) {
 		drawWin();
 		_isFinish = true;
@@ -765,6 +769,7 @@ void Scene_ChickenBoneless::sCollisions()
 				pickup->destroy();
 				_pickupActive = true;
 				timer.restart();
+				_timer = 5.f;
 				break;
 			}
 		}
@@ -924,6 +929,8 @@ void Scene_ChickenBoneless::sCollisions()
 				}
 				drawScore(totalScore);
 				dropPickup(enemyTransform.pos);
+				
+				//drawTimer();
 				break;
 			}
 		}
@@ -1115,11 +1122,17 @@ void Scene_ChickenBoneless::drawGameOver() {
 
 void Scene_ChickenBoneless::drawTimer()
 {
-	/*std::string str = std::to_string(static_cast<int>(_timer));
-	sf::Text text = sf::Text("COUNTDOWN: " + str, Assets::getInstance().getFont("Arial"), 15);
+	std::string str = std::to_string(static_cast<int>(_timer));
+	sf::Text text = sf::Text("COUNTDOWN: " + str, Assets::getInstance().getFont("Arial"), 32);
 
-	text.setPosition(300.f, 15.f);
-	_game->window().draw(text);*/
+	text.setStyle(sf::Text::Bold); // Bold text
+	text.setOutlineColor(sf::Color(50, 50, 50)); // Change to desired outline color
+	text.setOutlineThickness(5);
+	text.setCharacterSize(40);
+	text.setFillColor(sf::Color::White);
+
+	text.setPosition(400.f, 15.f);
+	_game->window().draw(text);
 }
 
 void Scene_ChickenBoneless::drawWin() {
@@ -1164,6 +1177,28 @@ void Scene_ChickenBoneless::sGuideHumans(sf::Time dt)
 			e->addComponent<CAnimation>(Assets::getInstance().getAnimation("humanleft"));
 		}
 	}
+}
+
+
+//_score = totalScore;
+//
+//std::string str = std::to_string(_scoreTotal + _score);
+//sf::Text text = sf::Text("SCORE: " + str, Assets::getInstance().getFont("Arial"), 32);
+//
+////text.setFillColor(sf::Color(99, 80, 50));
+//
+//text.setStyle(sf::Text::Bold); // Bold text
+//
+//text.setOutlineColor(sf::Color(50, 50, 50)); // Change to desired outline color
+//text.setOutlineThickness(5);
+//
+//text.setPosition(10.f, 10.f);
+//_game->window().draw(text);
+
+void Scene_ChickenBoneless::drawCountdown(float startSeconds)
+{
+	//std::string str = std::to_string("Time Left: " + startSeconds);
+
 }
 
 

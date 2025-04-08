@@ -43,8 +43,8 @@ class Scene_ChickenBoneless : public Scene {
 	bool                    _drawTextures{ true };
 	bool                    _drawAABB{ false };
 	bool                    _drawCam{ false };
-	float					_timer = 90.f;
-	const float				_timerThreshold = 90.f;
+	float					_timer = 0.f;
+	const float				_timerThreshold = 5.f;
 
 	bool					_pickupActive = false;
 
@@ -64,6 +64,8 @@ class Scene_ChickenBoneless : public Scene {
 	void					drawTimer();
 	void					drawWin();
 	void                    sGuideHumans(sf::Time dt);
+
+	void					drawCountdown(float startSeconds);
 
 
 
