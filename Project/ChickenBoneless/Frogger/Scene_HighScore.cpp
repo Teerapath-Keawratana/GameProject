@@ -40,11 +40,7 @@ void Scene_HighScore::loadHighScores(const std::string& filename) {
         return a.score > b.score;
         });
 
-   // ScoreEntry lastEntry = scores.back();
 
-   // std::cout << "The last entry is: " << lastEntry.name << " with score " << lastEntry.score << std::endl;
-
-    //return scores;
 }
 
 void Scene_HighScore::onEnd()
@@ -87,14 +83,7 @@ void Scene_HighScore::init()
     }
     _backgroundSprite.setTexture(_backgroundTexture);
 
-   // loadHighScores(filename);
-
-    //std::cout << "last score name:" << scores[scores.size() - 1].name << "\n";
-    //std::cout << "last score score:" << scores[scores.size() - 1].score << "\n";
-    //scores[scores.size() - 1].name = "Tee";
-    //scores[scores.size() - 1].score = 500;
-    //std::cout << "After last score name:" << scores[scores.size() - 1].name << "\n";
-    //std::cout << "Afterlast score score:" << scores[scores.size() - 1].score << "\n";
+  
 }
 
 void Scene_HighScore::update(sf::Time dt)

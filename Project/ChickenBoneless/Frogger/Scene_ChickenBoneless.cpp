@@ -54,7 +54,7 @@ void Scene_ChickenBoneless::init(const std::string& levelPath) {
 	spawnPlayer(spawnPos);
 	
 	//sSpawnMovingEntities();
-	spawnLife();
+	
 
 	MusicPlayer::getInstance().play("gameTheme");
 	MusicPlayer::getInstance().setVolume(10);
@@ -120,7 +120,7 @@ void Scene_ChickenBoneless::sRender()
 		}
 	}
 	drawScore(totalScore);
-	drawLife();
+	
 	if (_timer >= 0) {
 		drawTimer();
 	}
@@ -132,7 +132,7 @@ void Scene_ChickenBoneless::sRender()
 	}
 	if (_lives < 1) {
 		drawGameOver();
-		drawLife();
+		
 		return;
 	}
 
@@ -363,49 +363,7 @@ void Scene_ChickenBoneless::sLifespan(sf::Time dt)
 }
 
 void Scene_ChickenBoneless::spawnTarget()
-{/*
-	// Get the mouse position relative to the window
-	//sf::Vector2f spawnPos{ _game->windowSize().x, _game->windowSize().y };
-
-
-	sf::Vector2i mousePos = sf::Mouse::getPosition();
-
-	//mouse Position
-	sf::Vector2f mPos(mousePos);
-	mPos.x = mPos.x - 350;
-	mPos.y = mPos.y - 150;
-	std::cout << "Mouse position: (" << mousePos.x << ", " << mousePos.y << ")\n"; 
-
-
-	// Player Position
-	sf::Vector2f pPos;
-	pPos = _player->getComponent<CTransform>().pos;
-
-	std::cout << "Player position for distance " << pPos.x << "and " << pPos.y << "\n";
-
-	
-
-	// Find distance
-	float distance;
-	distance = sqrt(((abs(mPos.x) * abs(mPos.x)) - pPos.x * pPos.x) + ((abs(mPos.y) * abs(mPos.y)) - pPos.y * pPos.y));
-	std::cout << "Distance is " << distance << "\n";
-
-	
-	//find distance mouse and player
-
-	// if distance less than Radius 
-	_target = _entityManager.addEntity("target");
-	_target->addComponent<CTransform>(mPos);
-
-	_target->destroy();
-
-	auto bb = _target->addComponent<CAnimation>(Assets::getInstance().getAnimation("target")).animation.getBB();
-	_target->addComponent<CBoundingBox>(bb);
-	auto& sprite = _target->getComponent<CAnimation>().animation.getSprite();
-
-	centerOrigin(sprite);
-
-	//else not show*/
+{
 
 	// Mouse Position (adjust for window offset)
 	sf::Vector2i mousePos = sf::Mouse::getPosition();
@@ -526,22 +484,18 @@ void Scene_ChickenBoneless::inputName()
 					box.setOutlineColor(sf::Color::White);
 					std::cout << "User Entered: " << input << std::endl;
 
-					// why not replace last value
-					//_scores.back() = { input, _score };
+					// Replace Last Value in Vector
 					_scores[_scores.size() - 1] = { input, _score };
 
+
 					// show member vector _score in console
-					
 					for (const auto& entry : _scores)
 					{
 						std::cout << "Name: " << entry.name << " Score: " << entry.score << "\n";
 					}
-
-					/*_scores[_scores.size() - 1].name = input;
-					_scores[_scores.size() - 1].score = _score;*/
-
 					std::cout << "Last vector name is " << _scores[_scores.size() - 1].name
 						<< " Last vector score is " << _scores[_scores.size() - 1].score << "\n";
+
 
 					saveHighScores(_scores, highscorefilename);
 
@@ -566,15 +520,14 @@ void Scene_ChickenBoneless::inputName()
 			text.setFillColor(sf::Color::White); // Regular text color
 		}
 
-		//text.setString(input + (isActive ? "|" : ""));
+		
 		// back ground window
 		window.clear(sf::Color(144, 238, 144));
 		window.draw(box);
 		window.draw(text);
 		window.display();
 
-		/*_game->window().clear();
-		_game->changeScene("HIGHSCORE", std::make_shared<Scene_HighScore>(_game));*/
+
 	}
 }
 
@@ -964,11 +917,6 @@ void Scene_ChickenBoneless::sUpdate(sf::Time dt)
 		_pickupActive = false; // Deactivate after 10 seconds
 	}
 	
-
-	/*if ( droppickupTimer.getElapsedTime().asSeconds() > 5) {
-		auto& pickup = _entityManager.getEntities("Pickup");
-		pickup->destroy();
-	}*/
 }
 
 
@@ -1014,75 +962,11 @@ void Scene_ChickenBoneless::drawScore(int totalScore) {
 
 }
 
-//void Scene_ChickenBoneless::getScore() {
-//	/*auto pos = _player->getComponent<CTransform>().pos.y;
-//	auto name = _player->getComponent<CAnimation>().animation.getName();
-//	int posY = static_cast<int>(pos);
-//	switch (posY) {
-//	case 540:
-//		if (name != "die" && _scoredHeights[0] < 1)
-//			_scoredHeights[0] = 10;
-//		break;
-//	case 500:
-//		if (name != "die" && _scoredHeights[1] < 1)
-//			_scoredHeights[1] = 10;
-//		break;
-//	case 460:
-//		if (name != "die" && _scoredHeights[2] < 1)
-//			_scoredHeights[2] = 10;
-//		break;
-//	case 420:
-//		if (name != "die" && _scoredHeights[3] < 1)
-//			_scoredHeights[3] = 10;
-//		break;
-//	case 380:
-//		if (name != "die" && _scoredHeights[4] < 1)
-//			_scoredHeights[4] = 10;
-//		break;
-//	case 300:
-//		if (name != "die" && _scoredHeights[5] < 1)
-//			_scoredHeights[5] = 10;
-//		break;
-//	case 260:
-//		if (name != "die" && _scoredHeights[6] < 1)
-//			_scoredHeights[6] = 10;
-//		break;
-//	case 220:
-//		if (name != "die" && _scoredHeights[7] < 1)
-//			_scoredHeights[7] = 10;
-//		break;
-//	case 180:
-//		if (name != "die" && _scoredHeights[8] < 1)
-//			_scoredHeights[8] = 10;
-//		break;
-//	case 140:
-//		if (name != "die" && _scoredHeights[9] < 1)
-//			_scoredHeights[9] = 10;
-//		break;
-//	case 100:
-//		if (name != "die" && _scoredHeights[10] < 1 && _isComplete) {
-//			_scoredHeights[10] = 10;
-//			_scoreTotal = _scoreTotal + _score + _scoredHeights[10];
-//			_score = 0;
-//			for (int i = 0; i < 11; ++i) {
-//				_scoredHeights[i] = 0;
-//			}
-//			_isComplete = false;
-//		}
-//
-//		break;
-//	default:
-//		break;
-//	}*/
-//}
+
 
 void Scene_ChickenBoneless::drawGameOver() {
 
-	/*std::string str = "GAME OVER";
-	sf::Text text = sf::Text(str, Assets::getInstance().getFont("Arial"), 60);
-	centerOrigin(text);
-	text.setPosition(600.f, 400.f);
-	_game->window().draw(text);*/
+	
 
 	sf::Vector2f  pos(600.f, 400.f);
 	sf::Vector2f  vel(0.f, 0.f);
@@ -1107,16 +991,7 @@ void Scene_ChickenBoneless::drawGameOver() {
 	textEsc.setPosition(600.f, 600.f);
 	_game->window().draw(textEsc);
 
-	//auto enemy = _entityManager.addEntity("Boneless");
-	//enemy->addComponent<CTransform>(pos);
-
-	//auto bb = _player->addComponent<CAnimation>(Assets::getInstance().getAnimation("boneless")).animation.getBB();
-	//_player->addComponent<CBoundingBox>(bb);
-	//auto& sprite = _player->getComponent<CAnimation>().animation.getSprite();
-
-	//centerOrigin(sprite);
-
-	//Check hidh score
+	
 	checkFinalScore();
 }
 
@@ -1180,61 +1055,12 @@ void Scene_ChickenBoneless::sGuideHumans(sf::Time dt)
 }
 
 
-//_score = totalScore;
-//
-//std::string str = std::to_string(_scoreTotal + _score);
-//sf::Text text = sf::Text("SCORE: " + str, Assets::getInstance().getFont("Arial"), 32);
-//
-////text.setFillColor(sf::Color(99, 80, 50));
-//
-//text.setStyle(sf::Text::Bold); // Bold text
-//
-//text.setOutlineColor(sf::Color(50, 50, 50)); // Change to desired outline color
-//text.setOutlineThickness(5);
-//
-//text.setPosition(10.f, 10.f);
-//_game->window().draw(text);
-
-void Scene_ChickenBoneless::drawCountdown(float startSeconds)
-{
-	//std::string str = std::to_string("Time Left: " + startSeconds);
-
-}
 
 
-void Scene_ChickenBoneless::drawLife() {
 
-	/*for (auto e : _entityManager.getEntities("life")) {
-		auto& anim = e->getComponent<CAnimation>().animation;
-		auto& tfm = e->getComponent<CTransform>();
-		auto originalPos = tfm.pos;
 
-		if (_lives == 0) {
-			e->destroy();
-			return;
-		}
 
-		for (int i = 0; i < _lives; ++i) {
-			sf::Vector2f newPos = originalPos;
-			newPos.x += i * 20.f;
-			anim.getSprite().setPosition(newPos);
-			_game->window().draw(anim.getSprite());
-		}
-	}*/
 
-}
-
-void Scene_ChickenBoneless::spawnLife() {
-
-	/*sf::Vector2f pos{ 20.f, 50.f };
-
-	auto life = _entityManager.addEntity("life");
-	life->addComponent<CTransform>(pos, sf::Vector2f(0.f, 0.f));
-
-	auto sprite = life->addComponent<CAnimation>(Assets::getInstance()
-		.getAnimation("lives")).animation.getSprite();*/
-
-}
 
 
 

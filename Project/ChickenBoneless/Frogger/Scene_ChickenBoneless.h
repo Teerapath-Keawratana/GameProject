@@ -58,14 +58,13 @@ class Scene_ChickenBoneless : public Scene {
 	void					sAnimation(sf::Time dt);
 	void					drawScore(int totalScore);
 	//void					getScore();
-	void					drawLife();
-	void					spawnLife();
+
 	void					drawGameOver();
 	void					drawTimer();
 	void					drawWin();
 	void                    sGuideHumans(sf::Time dt);
 
-	void					drawCountdown(float startSeconds);
+	
 
 
 
@@ -77,7 +76,6 @@ class Scene_ChickenBoneless : public Scene {
 	void                    playerMovement(sf::Time dt);
 	void                    adjustPlayerPosition();
 	void	                registerActions();
-	//void                    checkIfDead(sPtrEntt e);
 	void					spawnBullet(sf::Vector2f mPos);
 	void					spawnEnemy();
 	void                    keepObjecsInBounds();
